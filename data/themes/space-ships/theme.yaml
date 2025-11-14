@@ -1,0 +1,56 @@
+# Space Ships Theme Metadata
+id: space-ships
+name: "Space Ships"
+version: "1.0.0"
+description: >
+  Sci-fi space combat theme featuring energy weapons, shields,
+  and ion engines. Inspired by Space Arena.
+
+author: "Battle Automata Team"
+license: "MIT"
+
+# Component categories
+component_categories:
+  - id: weapon
+    name: "Weapons"
+    types: [laser, missile, plasma, kinetic]
+
+  - id: armor
+    name: "Armor"
+    types: [light, medium, heavy]
+
+  - id: shield
+    name: "Shields"
+    types: [basic, advanced, reactive]
+
+  - id: engine
+    name: "Engines"
+    types: [ion, fusion, antimatter]
+
+  - id: power
+    name: "Power Systems"
+    types: [reactor, solar, battery]
+
+# Resource types
+resources:
+  - id: power
+    name: "Power"
+    unit: "W"
+    description: "Energy generation and consumption"
+
+  - id: weight
+    name: "Weight"
+    unit: "kg"
+    description: "Mass of components"
+
+  - id: slots
+    name: "Slots"
+    unit: "slots"
+    description: "Physical grid space"
+
+# Default unit constraints
+default_constraints:
+  max_power: 1000
+  max_weight: 5000
+  max_slots: 100
+  max_cost: 10000

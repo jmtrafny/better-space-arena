@@ -1,0 +1,31 @@
+# Light Shield Generator - Energy shield
+
+id: shield_generator_light
+name: "Light Shield Generator"
+type: defensive
+category: shield
+
+description: >
+  Basic energy shield that regenerates over time.
+  Good against energy weapons, weaker against kinetic.
+
+stats:
+  shield_strength: 150      # Shield HP
+  recharge_rate: 10.0       # HP/second
+  recharge_delay: 3.0       # Seconds before recharge starts
+  coverage: 1.0             # Full coverage
+
+# Shield absorption multipliers
+energy_absorption: 1.3      # 30% better vs energy
+kinetic_absorption: 0.8     # 20% worse vs kinetic
+
+resources:
+  power_draw: 25            # watts
+  weight: 60                # kg
+  slots: 1
+  cost: 120
+
+tags:
+  - shield
+  - energy_defense
+  - regenerating

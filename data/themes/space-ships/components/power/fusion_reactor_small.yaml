@@ -1,0 +1,25 @@
+# Small Fusion Reactor - Power generation
+
+id: fusion_reactor_small
+name: "Small Fusion Reactor"
+type: support
+category: power
+
+description: >
+  Compact fusion reactor providing steady power output.
+  Core component for any combat unit.
+
+stats:
+  max_output: 200      # watts generated
+  efficiency: 1.0      # 100% efficiency when undamaged
+
+resources:
+  power_draw: 0        # Generates, doesn't consume
+  weight: 150          # kg
+  slots: 2             # Compact
+  cost: 200            # Expensive
+
+tags:
+  - power_generation
+  - fusion
+  - core_component

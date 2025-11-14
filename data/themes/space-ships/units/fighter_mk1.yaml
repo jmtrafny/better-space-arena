@@ -1,0 +1,81 @@
+# Fighter Mk1 - Basic light fighter
+
+# Identity
+id: fighter_mk1
+name: "Fighter Mk1"
+theme: space-ships
+class_name: fighter
+
+description: >
+  Fast and maneuverable light fighter designed for hit-and-run
+  tactics. Excellent against other fighters but vulnerable to
+  heavy weapons. Relies on speed and shields over armor.
+
+# Grid layout
+layout:
+  width: 10
+  height: 10
+
+# Component placement
+components:
+  # Weapon (front)
+  - component_id: laser_cannon_mk1
+    position:
+      x: 5
+      y: 2
+    facing: 0        # Forward
+    slot_name: weapon_primary
+
+  # Defense (center)
+  - component_id: shield_generator_light
+    position:
+      x: 5
+      y: 5
+    facing: 0
+    slot_name: shield
+
+  - component_id: light_armor_mk1
+    position:
+      x: 5
+      y: 5
+    facing: 0
+    slot_name: armor_core
+
+  # Power (center)
+  - component_id: fusion_reactor_small
+    position:
+      x: 5
+      y: 5
+    facing: 0
+    slot_name: reactor
+
+  # Propulsion (rear)
+  - component_id: ion_engine_mk1
+    position:
+      x: 5
+      y: 8
+    facing: 180      # Rear
+    slot_name: main_engine
+
+# Resource budgets
+resources:
+  max_power: 200     # watts
+  max_weight: 800    # kg
+  max_slots: 20      # grid slots
+  max_cost: 1000     # credits
+
+# AI behavior
+ai:
+  movement_style: kiting
+  engagement_range: 80.0
+  retreat_threshold: 0.3    # Retreat at 30% health
+
+# Metadata
+tags:
+  - fighter
+  - fast
+  - anti_fighter
+  - energy_weapons
+
+cost: 620
+build_time: 60      # seconds
