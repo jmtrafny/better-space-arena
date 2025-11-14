@@ -546,257 +546,414 @@ The core Battle Automata Engine has been fully implemented with the following sy
 
 ## 🎯 PHASE 2: Cross-Platform Graphical Interface
 
-**Status:** PLANNING PHASE
+**Status:** ARCHITECTURE APPROVED ✅ → READY FOR IMPLEMENTATION
 
-### Objective
+### Approved Architecture Summary
 
-Design and implement a cross-platform graphical interface that can be built and deployed as:
-- **Progressive Web App (PWA)** - Works in browsers, installable
-- **Android App** - Native Android application
-- **iOS App** - Native iPhone/iPad application
+The Phase 2 architecture has been designed and approved. The cross-platform graphical interface will be built using:
 
-All three platforms share the same codebase and use the existing Python engine as the backend.
+**Technology Stack:**
+- **Frontend:** React + TypeScript + Vite
+- **Graphics:** PixiJS v7 (HTML5 Canvas/WebGL)
+- **Backend Integration:** Pyodide (Python via WebAssembly)
+- **Native Wrapper:** Capacitor 5
+- **State Management:** Zustand
+- **Styling:** Tailwind CSS
 
-### Key Requirements
+**Build Targets:**
+- Progressive Web App (PWA) - Netlify/Vercel hosting
+- Android App (APK/AAB) - Google Play Store
+- iOS App (IPA) - Apple App Store
 
-**1. Architecture Constraints**
-- **Reuse:** Must leverage existing Python Battle Automata Engine
-- **Separation:** Graphics layer completely independent of simulation core
-- **Theme Support:** Different themes can use different graphics/assets
-- **Deterministic:** Graphics render from event log (replay capability)
+**Key Architecture Decisions:**
+- ✅ **95%+ code sharing** across all platforms (single web codebase)
+- ✅ **Client-side simulation** via Pyodide (offline-first, $0 hosting costs)
+- ✅ **60 FPS graphics** with PixiJS 2D rendering
+- ✅ **Weekend viable** - familiar web technologies, minimal learning curve
+- ✅ **Deterministic replay** - battles rendered from event logs
 
-**2. Cross-Platform Build**
-- **Single Codebase:** One frontend codebase for all platforms
-- **Platform-Specific Builds:** Different build scripts for PWA/Android/iOS
-- **Native Performance:** Smooth 60 FPS rendering on all platforms
-- **Offline Capable:** PWA and native apps work without network
+### Architecture Documentation
 
-**3. Graphics Features**
-- **Real-Time Rendering:** Smooth visualization of battles
-- **Battle Replay:** Replay any battle from event log
-- **Interactive:** Pan, zoom, pause, speed controls
-- **Theme Assets:** Load sprites, animations per theme
-- **Unit Builder UI:** Visual component placement
-- **Battle Viewer:** Watch simulations in real-time
+Comprehensive architecture documents are available in `docs/phase2/`:
 
-**4. Theme Extensibility**
-- **Asset System:** Each theme provides its own graphics
-- **Sprite Sheets:** Component sprites, animations, effects
-- **Audio:** Optional sound effects per theme
-- **UI Themes:** Theme-specific colors, fonts, icons
-- **Fallbacks:** Default graphics if theme assets missing
+1. **Frontend Technology Stack** - Technology comparison and selection rationale
+2. **Graphics Rendering Architecture** - Canvas rendering, animation system, 60 FPS strategy
+3. **Backend Integration Strategy** - Pyodide WASM integration, TypeScript wrappers
+4. **Cross-Platform Build System** - Build scripts, CI/CD, deployment strategies
 
-### Technical Stack Options
+### Implementation Roadmap
 
-**Frontend (Choose One):**
+**Weekend 1: Foundation & Core Integration (8-12 hours)**
 
-**Option A: React Native + Web** (Recommended)
-- **Framework:** React Native (mobile) + React (web)
-- **Shared Code:** ~95% code sharing
-- **Rendering:** React Native Skia for 2D graphics
-- **Build Outputs:**
-  - PWA: React web app with service worker
-  - Android: React Native APK
-  - iOS: React Native IPA
+**Goal:** Get Python engine running in browser with basic UI
 
-**Option B: Flutter**
-- **Framework:** Flutter (all platforms)
-- **Shared Code:** 100% Dart code
-- **Rendering:** Flutter's Skia engine
-- **Build Outputs:**
-  - PWA: Flutter web
-  - Android: Flutter APK
-  - iOS: Flutter IPA
+**Tasks:**
+1. Initialize project structure
+   ```bash
+   npm create vite@latest battle-automata-frontend -- --template react-ts
+   cd battle-automata-frontend
+   npm install pyodide zustand pixi.js @capacitor/core
+   ```
 
-**Option C: Capacitor + Web Canvas**
-- **Framework:** Web technologies (React/Vue/Svelte)
-- **Rendering:** HTML5 Canvas or WebGL
-- **Wrapper:** Capacitor for native builds
-- **Build Outputs:**
-  - PWA: Standard web app
-  - Android/iOS: Capacitor wrapped web app
+2. Set up Pyodide integration
+   - Create `src/engine/pyodide-loader.ts` - Load and initialize Pyodide
+   - Create `src/engine/battle-engine-wasm.ts` - TypeScript wrapper for Python engine
+   - Package Battle Automata Engine as Python wheel
+   - Test loading engine in browser console
 
-**Backend Integration:**
+3. Create basic UI structure
+   - Set up React Router for navigation
+   - Create placeholder screens (Home, Battle, Builder)
+   - Add Zustand state management
+   - Test navigation flow
 
-**Strategy 1: Hybrid API** (Recommended for multiplayer)
-- Python FastAPI backend
-- RESTful API + WebSocket for real-time
-- Backend runs battles (authoritative server)
-- Frontend renders results
+4. Implement first battle simulation
+   - Load two preset units from Python engine
+   - Call `battle.simulate()` via Pyodide
+   - Display battle result (text-based for now)
+   - Verify determinism (same seed = same result)
 
-**Strategy 2: Client-Side** (Recommended for offline)
-- WebAssembly Python (Pyodide)
-- Battle simulation runs in browser
-- No server required
-- Fully offline
+**Deliverable:** Working web app that runs Python battles in browser
 
-**Strategy 3: Dual Mode**
-- Client-side for single player
-- Server-side for multiplayer/tournaments
-- Best of both worlds
+---
 
-### Architecture Diagram
+**Weekend 2: Graphics Layer (12-16 hours)**
 
-```
-┌────────────────────────────────────────────────────┐
-│              Frontend (Cross-Platform)             │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐         │
-│  │   PWA    │  │ Android  │  │   iOS    │         │
-│  │  (Web)   │  │  (APK)   │  │  (IPA)   │         │
-│  └─────┬────┘  └─────┬────┘  └─────┬────┘         │
-│        │             │             │               │
-│        └─────────────┴─────────────┘               │
-│                     │                              │
-│         ┌───────────▼────────────┐                 │
-│         │  Shared UI Components  │                 │
-│         │  - Battle Renderer     │                 │
-│         │  - Unit Builder UI     │                 │
-│         │  - Theme Asset Loader  │                 │
-│         └───────────┬────────────┘                 │
-└─────────────────────┼──────────────────────────────┘
-                      │
-          ┌───────────▼───────────┐
-          │   API Layer (HTTP)    │
-          │   - REST endpoints    │
-          │   - WebSocket stream  │
-          └───────────┬───────────┘
-                      │
-┌─────────────────────▼──────────────────────────────┐
-│         Python Backend (FastAPI)                   │
-│  ┌──────────────────────────────────────┐          │
-│  │  Battle Automata Engine (Existing)   │          │
-│  │  - Component System                  │          │
-│  │  - Unit Builder                      │          │
-│  │  - Battle Simulator                  │          │
-│  │  - Event Logger                      │          │
-│  └──────────────────────────────────────┘          │
-└────────────────────────────────────────────────────┘
-```
+**Goal:** Animated battle visualization at 60 FPS
 
-### Theme Asset Structure
+**Tasks:**
+1. Integrate PixiJS
+   - Create `src/game/BattleRenderer.ts` - PixiJS Application wrapper
+   - Set up canvas element in React component
+   - Implement basic rendering loop (60 FPS)
+   - Add FPS counter for performance monitoring
+
+2. Implement asset loading
+   - Create `src/game/AssetLoader.ts` - Load theme sprites
+   - Design theme asset manifest structure
+   - Load first test sprites (unit, laser, explosion)
+   - Implement sprite caching (IndexedDB)
+
+3. Build animation system
+   - Create `src/game/AnimationEngine.ts` - Event-driven animations
+   - Implement interpolation between 0.1s simulation steps
+   - Add projectile animations (laser beams)
+   - Add explosion animations (sprite sheet frames)
+   - Smooth unit movement
+
+4. Implement camera controls
+   - Create `src/game/CameraController.ts` - Pan, zoom, follow
+   - Mouse drag to pan
+   - Mouse wheel to zoom
+   - Auto-frame units at battle start
+   - Smooth camera transitions
+
+5. Add battle replay controls
+   - Create playback UI (play/pause/stop buttons)
+   - Speed controls (0.5x, 1x, 2x, 4x)
+   - Timeline scrubber for seeking
+   - Frame-by-frame stepping
+
+**Deliverable:** Full battle animation with replay controls
+
+---
+
+**Weekend 3: Polish & Mobile (12-16 hours)**
+
+**Goal:** Production PWA + mobile app builds
+
+**Tasks:**
+1. Build Unit Builder UI
+   - Create grid-based component placement interface
+   - Drag-and-drop components from palette
+   - Display resource constraints (power, weight, slots)
+   - Validate unit configuration
+   - Save/load custom units
+
+2. Add offline support
+   - Configure Vite PWA plugin
+   - Generate service worker
+   - Cache theme assets
+   - Test offline functionality
+   - Add install prompt for PWA
+
+3. Set up Capacitor
+   ```bash
+   npm install @capacitor/cli @capacitor/core
+   npx cap init
+   npx cap add android
+   npx cap add ios  # macOS only
+   ```
+
+4. Create build scripts
+   - `scripts/build-web.sh` - Build optimized PWA
+   - `scripts/build-android.sh` - Build Android APK
+   - `scripts/build-ios.sh` - Build iOS IPA (macOS)
+   - Test builds on all platforms
+
+5. Performance optimization
+   - Implement sprite batching
+   - Add object pooling for particles
+   - Optimize bundle size (code splitting)
+   - Test on low-end mobile devices
+   - Implement graphics quality settings
+
+6. Deploy PWA
+   - Build production bundle
+   - Deploy to Netlify or Vercel
+   - Configure custom domain (optional)
+   - Test PWA installation
+
+**Deliverable:** Production PWA + Android/iOS apps
+
+---
+
+### Theme Asset Structure (NEW)
+
+Extend existing themes with graphics assets:
 
 ```
 data/themes/space-ships/
 ├── theme.yaml                  # Existing metadata
 ├── components/                 # Existing component YAML
 ├── units/                      # Existing unit YAML
-└── assets/                     # NEW: Graphics assets
+└── assets/                     # NEW: Graphics for frontend
+    ├── manifest.json           # Asset manifest
     ├── sprites/
     │   ├── components/
-    │   │   ├── laser_cannon.png
-    │   │   ├── armor_plate.png
+    │   │   ├── laser_cannon_mk1@1x.png
+    │   │   ├── laser_cannon_mk1@2x.png  # Retina
+    │   │   ├── armor_plate@1x.png
     │   │   └── ...
     │   ├── units/
-    │   │   ├── fighter.png
-    │   │   └── ...
+    │   │   ├── fighter@1x.png
+    │   │   └── tank@1x.png
     │   └── effects/
     │       ├── laser_beam.png
-    │       ├── explosion.png
-    │       └── ...
-    ├── animations/
-    │   ├── laser_fire.json      # Animation definitions
-    │   ├── explosion.json
+    │       └── explosion.png
+    ├── spritesheets/
+    │   ├── explosions.json     # Texture atlas metadata
+    │   ├── explosions.png      # Packed spritesheet
     │   └── ...
-    ├── audio/                   # Optional
-    │   ├── laser_shot.mp3
-    │   ├── explosion.mp3
-    │   └── ...
-    └── ui/                      # Theme UI assets
-        ├── background.png
-        ├── button_style.json
-        └── colors.json
+    └── audio/                   # Optional
+        ├── laser_shot.mp3
+        └── explosion.mp3
 ```
 
-### Build Scripts Structure
+**Asset Manifest Example:**
 
+```json
+{
+  "theme_id": "space-ships",
+  "version": "1.0.0",
+  "sprites": {
+    "laser_cannon_mk1": {
+      "1x": "sprites/components/laser_cannon_mk1@1x.png",
+      "2x": "sprites/components/laser_cannon_mk1@2x.png"
+    },
+    "laser_beam": "sprites/effects/laser_beam.png"
+  },
+  "spritesheets": {
+    "explosions": {
+      "image": "spritesheets/explosions.png",
+      "data": "spritesheets/explosions.json"
+    }
+  }
+}
 ```
-battle-automata-frontend/
-├── src/                        # Shared source code
-│   ├── components/            # UI components
-│   ├── game/                  # Game rendering
-│   │   ├── BattleRenderer.tsx
-│   │   ├── ThemeLoader.tsx
-│   │   └── AssetManager.tsx
-│   ├── api/                   # Backend API client
-│   └── state/                 # State management
-├── android/                   # Android-specific
-│   └── build.gradle
-├── ios/                       # iOS-specific
-│   └── Podfile
-├── public/                    # PWA assets
-│   ├── manifest.json
-│   └── service-worker.js
-├── scripts/
-│   ├── build-pwa.sh          # Build PWA
-│   ├── build-android.sh      # Build Android APK
-│   └── build-ios.sh          # Build iOS IPA
-├── package.json
-└── README.md
-```
-
-### Next Steps for Agent
-
-**The agent should plan and architect:**
-
-1. **Technology Stack Decision**
-   - Choose frontend framework (React Native, Flutter, or Capacitor)
-   - Choose rendering approach (Canvas, WebGL, or native)
-   - Choose backend integration strategy (API, WASM, or dual)
-   - Justify choices based on requirements
-
-2. **Graphics Architecture**
-   - Design battle rendering system
-   - Design asset loading and caching
-   - Design theme asset structure
-   - Design animation system
-   - Plan for 60 FPS performance
-
-3. **Cross-Platform Strategy**
-   - How to share code between platforms
-   - Platform-specific adaptations needed
-   - Build pipeline for each platform
-   - Testing strategy per platform
-
-4. **Backend Integration**
-   - API design (if using FastAPI)
-   - WebSocket protocol for real-time battles
-   - State synchronization strategy
-   - Offline mode (if applicable)
-
-5. **Asset Management**
-   - Asset loading from theme directories
-   - Sprite sheet management
-   - Animation definitions
-   - Audio integration
-   - Asset bundling for production
-
-6. **UI/UX Design**
-   - Battle viewer interface
-   - Unit builder interface
-   - Component library browser
-   - Battle replay controls
-   - Touch-friendly mobile UI
-
-7. **Build System**
-   - Build scripts for each platform
-   - Asset pipeline
-   - Code splitting and optimization
-   - Distribution strategy
-
-**Deliverables Expected:**
-
-- Complete architecture document for graphical layer
-- Technology stack recommendations with justification
-- Detailed component architecture
-- API specifications (if backend required)
-- Theme asset schema and examples
-- Build pipeline design
-- Cross-platform compatibility strategy
-- Performance optimization plan
-- Implementation roadmap with phases
-
-**Invoke the orchestrator or architect to begin planning the graphical interface layer.**
 
 ---
 
-**Ready to make it visual? Let's design the cross-platform graphics layer!** 🎮
+### Frontend Project Structure
+
+```
+battle-automata-frontend/
+├── src/
+│   ├── components/              # React UI components
+│   │   ├── battle/
+│   │   │   ├── BattleViewer.tsx
+│   │   │   ├── BattleControls.tsx
+│   │   │   └── EventLog.tsx
+│   │   ├── builder/
+│   │   │   ├── UnitBuilder.tsx
+│   │   │   ├── ComponentPalette.tsx
+│   │   │   └── GridEditor.tsx
+│   │   └── ui/
+│   │       ├── Button.tsx
+│   │       └── Layout.tsx
+│   ├── game/                    # PixiJS rendering
+│   │   ├── BattleRenderer.ts
+│   │   ├── AssetLoader.ts
+│   │   ├── AnimationEngine.ts
+│   │   └── CameraController.ts
+│   ├── engine/                  # Pyodide integration
+│   │   ├── pyodide-loader.ts
+│   │   └── battle-engine-wasm.ts
+│   ├── state/                   # Zustand stores
+│   │   ├── battleStore.ts
+│   │   ├── themeStore.ts
+│   │   └── unitStore.ts
+│   ├── utils/
+│   │   └── types.ts             # TypeScript types
+│   ├── App.tsx
+│   └── main.tsx
+├── public/
+│   ├── manifest.json            # PWA manifest
+│   └── icons/                   # App icons
+├── scripts/
+│   ├── build-web.sh
+│   ├── build-android.sh
+│   └── build-ios.sh
+├── android/                     # Capacitor Android
+├── ios/                         # Capacitor iOS
+├── package.json
+├── vite.config.ts
+├── capacitor.config.ts
+└── README.md
+```
+
+---
+
+### Key Implementation Guidelines
+
+**1. Pyodide Integration**
+
+```typescript
+// src/engine/battle-engine-wasm.ts
+import { loadPyodide } from 'pyodide';
+
+export class BattleEngineWASM {
+  private pyodide: any;
+
+  async init() {
+    this.pyodide = await loadPyodide({
+      indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.25.0/full/'
+    });
+
+    // Load Battle Automata Engine wheel
+    await this.pyodide.loadPackage('/static/battle_automata-1.0.0-py3-none-any.whl');
+  }
+
+  async simulateBattle(unit1: any, unit2: any, seed: number) {
+    const result = await this.pyodide.runPythonAsync(`
+      from battle_automata.api.battle import Battle, BattleConfig
+
+      config = BattleConfig(seed=${seed})
+      battle = Battle(config)
+      result = battle.simulate()
+      result.to_dict()
+    `);
+
+    return result.toJs();
+  }
+}
+```
+
+**2. PixiJS Rendering**
+
+```typescript
+// src/game/BattleRenderer.ts
+import { Application, Sprite } from 'pixi.js';
+
+export class BattleRenderer {
+  private app: Application;
+
+  async init(canvas: HTMLCanvasElement) {
+    this.app = new Application({
+      view: canvas,
+      width: 1920,
+      height: 1080,
+      backgroundColor: 0x001122
+    });
+
+    this.app.ticker.add(() => this.render());
+  }
+
+  render() {
+    // 60 FPS rendering loop
+  }
+}
+```
+
+**3. State Management**
+
+```typescript
+// src/state/battleStore.ts
+import { create } from 'zustand';
+
+interface BattleState {
+  currentBattle: BattleResult | null;
+  isPlaying: boolean;
+  playbackSpeed: number;
+
+  startBattle: (unit1: any, unit2: any) => Promise<void>;
+  pause: () => void;
+  setSpeed: (speed: number) => void;
+}
+
+export const useBattleStore = create<BattleState>((set) => ({
+  currentBattle: null,
+  isPlaying: false,
+  playbackSpeed: 1.0,
+
+  startBattle: async (unit1, unit2) => {
+    const result = await battleEngine.simulateBattle(unit1, unit2, Date.now());
+    set({ currentBattle: result, isPlaying: true });
+  },
+
+  pause: () => set({ isPlaying: false }),
+  setSpeed: (speed) => set({ playbackSpeed: speed })
+}));
+```
+
+---
+
+### Success Criteria
+
+**Phase 2 is complete when:**
+
+✅ **PWA:**
+- Loads in < 5 seconds after first visit
+- Battles render at 60 FPS
+- Works fully offline
+- Installable on mobile home screen
+
+✅ **Android:**
+- APK builds successfully
+- Runs on Android 7+ devices
+- 60 FPS on mid-range devices (2020+)
+- Passes Google Play policy checks
+
+✅ **iOS:**
+- IPA builds successfully (macOS required)
+- Runs on iOS 13+ devices
+- 60 FPS on iPhone 8 and newer
+- Passes App Store review guidelines
+
+✅ **Features:**
+- Battle viewer with smooth animations
+- Replay controls (play/pause/speed/seek)
+- Unit builder with drag-and-drop
+- Theme asset loading
+- Offline-capable
+
+---
+
+### Next Steps
+
+**To begin implementation:**
+
+1. Create new directory: `battle-automata-frontend/`
+2. Run: `npm create vite@latest battle-automata-frontend -- --template react-ts`
+3. Follow Weekend 1 roadmap above
+4. Reference architecture docs in `docs/phase2/` for detailed guidance
+
+**Questions/Issues:**
+- Phase 2 architecture documents provide detailed implementations
+- Pyodide documentation: https://pyodide.org/
+- PixiJS examples: https://pixijs.io/examples/
+- Capacitor guides: https://capacitorjs.com/docs
+
+---
+
+**Let's build the graphical interface!** 🚀
