@@ -5,6 +5,8 @@ export interface EventLogProps {
   events: BattleEvent[];
   maxHeight?: string;
   autoScroll?: boolean;
+  currentEventIndex?: number;
+  onEventClick?: (eventIndex: number) => void;
 }
 
 type EventFilter = 'all' | 'damage' | 'movement' | 'abilities' | 'other';
@@ -12,18 +14,31 @@ type EventFilter = 'all' | 'damage' | 'movement' | 'abilities' | 'other';
 export default function EventLog({
   events,
   maxHeight = '400px',
-  autoScroll = true
+  autoScroll = true,
+  currentEventIndex,
+  onEventClick
 }: EventLogProps) {
   const [filter, setFilter] = useState<EventFilter>('all');
   const logEndRef = useRef<HTMLDivElement>(null);
   const logContainerRef = useRef<HTMLDivElement>(null);
+  const currentEventRef = useRef<HTMLDivElement>(null);
+
+  // Auto-scroll to current event when index changes
+  useEffect(() => {
+    if (autoScroll && currentEventRef.current && currentEventIndex !== undefined) {
+      currentEventRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    }
+  }, [currentEventIndex, autoScroll]);
 
   // Auto-scroll to bottom when new events arrive (within container only)
   useEffect(() => {
-    if (autoScroll && logContainerRef.current) {
+    if (autoScroll && logContainerRef.current && currentEventIndex === undefined) {
       logContainerRef.current.scrollTop = logContainerRef.current.scrollHeight;
     }
-  }, [events, autoScroll]);
+  }, [events, autoScroll, currentEventIndex]);
 
   const filterEvent = (event: BattleEvent): boolean => {
     if (filter === 'all') return true;
@@ -112,12 +127,14 @@ export default function EventLog({
     gap: '0.5rem',
   };
 
-  const eventItemStyles = (eventType: string): React.CSSProperties => ({
+  const eventItemStyles = (eventType: string, isCurrentEvent: boolean): React.CSSProperties => ({
     padding: '0.75rem',
-    backgroundColor: '#111827',
-    borderLeft: `4px solid ${getEventColor(eventType)}`,
+    backgroundColor: isCurrentEvent ? '#1e3a8a' : '#111827',
+    borderLeft: `4px solid ${isCurrentEvent ? '#3b82f6' : getEventColor(eventType)}`,
     borderRadius: '0.25rem',
     fontSize: '0.875rem',
+    cursor: onEventClick ? 'pointer' : 'default',
+    transition: 'background-color 0.2s, border-color 0.2s',
   });
 
   const eventHeaderStyles: React.CSSProperties = {
@@ -197,8 +214,14 @@ export default function EventLog({
           filteredEvents.map((event, index) => {
             const eventType = (event as any).event_type || event.type || 'unknown';
             const eventData = event.data || {};
+            const isCurrentEvent = currentEventIndex === index;
             return (
-              <div key={index} style={eventItemStyles(eventType)}>
+              <div
+                key={index}
+                ref={isCurrentEvent ? currentEventRef : undefined}
+                style={eventItemStyles(eventType, isCurrentEvent)}
+                onClick={() => onEventClick?.(index)}
+              >
                 <div style={eventHeaderStyles}>
                   <span style={eventTypeStyles(eventType)}>
                     {eventType}

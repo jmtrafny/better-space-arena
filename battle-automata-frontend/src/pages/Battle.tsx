@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useBattleStore } from '../state';
 import { pyodideLoader } from '../engine/pyodide-loader';
-import BattleViewer from '../components/battle/BattleViewer';
+import BattleViewer, { type BattleViewerRef } from '../components/battle/BattleViewer';
 import BattleControls from '../components/battle/BattleControls';
 import EventLog from '../components/battle/EventLog';
 import type { BattleState as ViewerBattleState, UnitState } from '../components/battle/BattleViewer';
+import { BattleAnimator } from '../game/BattleAnimator';
 
 export default function Battle() {
   // Get battle store state and actions
@@ -18,11 +19,17 @@ export default function Battle() {
     duration,
     events,
     startBattle,
-    resetBattle,
     setLoadingProgress,
   } = useBattleStore();
 
   const [playbackSpeed, setPlaybackSpeed] = useState(1.0);
+  const [battleAnimator, setBattleAnimator] = useState<BattleAnimator | null>(null);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [totalDuration, setTotalDuration] = useState(0);
+  const [currentEventIndex, setCurrentEventIndex] = useState<number | undefined>(undefined);
+  const [animatorState, setAnimatorState] = useState<'idle' | 'running' | 'paused' | 'completed'>('idle');
+
+  const viewerRef = useRef<BattleViewerRef>(null);
 
   // Subscribe to Pyodide loading state
   useEffect(() => {
@@ -34,6 +41,51 @@ export default function Battle() {
       unsubscribe();
     };
   }, [setLoadingProgress]);
+
+  // Get BattleAnimator from viewer after it initializes
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (viewerRef.current && !battleAnimator) {
+        const animator = viewerRef.current.getBattleAnimator();
+        if (animator) {
+          setBattleAnimator(animator);
+          clearInterval(timer);
+        }
+      }
+    }, 100);
+
+    return () => clearInterval(timer);
+  }, [battleAnimator]);
+
+  // Load battle into animator when result arrives
+  useEffect(() => {
+    if (result && battleAnimator && status === 'completed') {
+      console.log('Loading battle into animator');
+      battleAnimator.loadBattle(result);
+      setTotalDuration(battleAnimator.getTotalDuration());
+      setCurrentTime(0);
+      setAnimatorState('paused');
+    }
+  }, [result, battleAnimator, status]);
+
+  // Update playback state periodically during animation
+  useEffect(() => {
+    if (!battleAnimator) return;
+
+    const interval = setInterval(() => {
+      const state = battleAnimator.getState();
+      setAnimatorState(state as any);
+      setCurrentTime(battleAnimator.getCurrentTime());
+
+      // Calculate current event index based on time
+      if (result?.events) {
+        const idx = result.events.findIndex(e => e.timestamp > battleAnimator.getCurrentTime());
+        setCurrentEventIndex(idx > 0 ? idx - 1 : 0);
+      }
+    }, 50); // Update UI at ~20fps
+
+    return () => clearInterval(interval);
+  }, [battleAnimator, result]);
 
   const handleRunBattle = async () => {
     // Use actual unit definitions from Python engine
@@ -184,6 +236,7 @@ export default function Battle() {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 400px', gap: '2rem', marginBottom: '2rem' }}>
           <div>
             <BattleViewer
+              ref={viewerRef}
               battleState={viewerBattleState}
               onUnitClick={(unitId) => console.log('Unit clicked:', unitId)}
             />
@@ -191,13 +244,33 @@ export default function Battle() {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <BattleControls
-              status={status === 'initializing' ? 'idle' : status as any}
+              status={status === 'completed' && result ? animatorState : status as any}
               speed={playbackSpeed}
-              onPlay={handleRunBattle}
-              onPause={() => console.log('Pause not yet implemented')}
-              onStep={() => console.log('Step not yet implemented')}
-              onReset={resetBattle}
-              onSpeedChange={setPlaybackSpeed}
+              onPlay={() => {
+                if (status !== 'completed') {
+                  // Run the battle simulation
+                  handleRunBattle();
+                } else if (battleAnimator) {
+                  // Battle already complete, just play animation
+                  battleAnimator.play();
+                }
+              }}
+              onPause={() => battleAnimator?.pause()}
+              onStep={() => battleAnimator?.stepForward()}
+              onReset={() => {
+                battleAnimator?.stop();
+                setCurrentTime(0);
+                setCurrentEventIndex(0);
+              }}
+              onSpeedChange={(speed) => {
+                setPlaybackSpeed(speed);
+                battleAnimator?.setSpeed(speed);
+              }}
+              onSeek={(time) => battleAnimator?.seekTo(time)}
+              onStepForward={() => battleAnimator?.stepForward()}
+              onStepBackward={() => battleAnimator?.stepBackward()}
+              currentTime={currentTime}
+              totalDuration={totalDuration}
               currentTurn={events.length}
               totalTurns={600}
               isLoading={isLoading}
@@ -214,7 +287,16 @@ export default function Battle() {
         </div>
 
         <div>
-          <EventLog events={events} maxHeight="400px" />
+          <EventLog
+            events={events}
+            maxHeight="400px"
+            currentEventIndex={currentEventIndex}
+            onEventClick={(index) => {
+              if (result?.events && result.events[index]) {
+                battleAnimator?.seekTo(result.events[index].timestamp);
+              }
+            }}
+          />
         </div>
       </div>
     </div>

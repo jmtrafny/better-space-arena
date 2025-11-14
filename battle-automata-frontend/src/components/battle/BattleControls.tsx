@@ -23,6 +23,12 @@ export interface BattleControlsProps {
   currentTurn?: number;
   totalTurns?: number;
   isLoading?: boolean;
+  // Phase 3A additions
+  onSeek?: (time: number) => void;
+  onStepForward?: () => void;
+  onStepBackward?: () => void;
+  currentTime?: number;
+  totalDuration?: number;
 }
 
 export default function BattleControls({
@@ -35,7 +41,12 @@ export default function BattleControls({
   onSpeedChange,
   currentTurn = 0,
   totalTurns = 100,
-  isLoading = false
+  isLoading = false,
+  onSeek,
+  onStepForward,
+  onStepBackward,
+  currentTime = 0,
+  totalDuration = 0
 }: BattleControlsProps) {
   const containerStyles: React.CSSProperties = {
     backgroundColor: '#1f2937',
@@ -133,6 +144,13 @@ export default function BattleControls({
     }
   };
 
+  const formatTime = (seconds: number): string => {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    const ms = Math.floor((seconds % 1) * 10);
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}.${ms}`;
+  };
+
   const statusBadgeStyles: React.CSSProperties = {
     display: 'inline-block',
     padding: '0.25rem 0.75rem',
@@ -225,6 +243,66 @@ export default function BattleControls({
           </Button>
         </div>
       </div>
+
+      {/* Step Controls */}
+      {(onStepBackward || onStepForward) && (
+        <div style={sectionStyles}>
+          <span style={labelStyles}>Step Controls</span>
+          <div style={buttonsContainerStyles}>
+            <Button
+              variant="secondary"
+              onClick={onStepBackward}
+              disabled={!canStep || isLoading}
+            >
+              |← Backward
+            </Button>
+            <Button
+              variant="secondary"
+              onClick={onStepForward}
+              disabled={!canStep || isLoading}
+            >
+              Forward →|
+            </Button>
+          </div>
+        </div>
+      )}
+
+      {/* Timeline Scrubber */}
+      {onSeek && totalDuration > 0 && (
+        <div style={sectionStyles}>
+          <span style={labelStyles}>Timeline</span>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            marginBottom: '0.5rem',
+            fontSize: '0.875rem',
+          }}>
+            <span style={{ color: '#9ca3af', fontFamily: 'monospace' }}>
+              {formatTime(currentTime)}
+            </span>
+            <span style={{ color: '#6b7280' }}>
+              {Math.round((currentTime / totalDuration) * 100)}%
+            </span>
+            <span style={{ color: '#9ca3af', fontFamily: 'monospace' }}>
+              {formatTime(totalDuration)}
+            </span>
+          </div>
+          <input
+            type="range"
+            min="0"
+            max={totalDuration}
+            step="0.01"
+            value={currentTime}
+            onChange={(e) => onSeek(parseFloat(e.target.value))}
+            disabled={isLoading}
+            style={{
+              ...sliderStyles,
+              accentColor: '#3b82f6',
+              background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${(currentTime / totalDuration) * 100}%, #374151 ${(currentTime / totalDuration) * 100}%, #374151 100%)`,
+            }}
+          />
+        </div>
+      )}
 
       {/* Speed Control */}
       <div style={sectionStyles}>

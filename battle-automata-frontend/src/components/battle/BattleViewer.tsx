@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect, useRef, useImperativeHandle, forwardRef } from 'react';
+import { BattleRenderer } from '../../game/BattleRenderer';
+import { BattleAnimator } from '../../game/BattleAnimator';
 
 /**
  * BattleViewer Component
  *
- * Main container for battle visualization
- * Currently shows a placeholder for PixiJS canvas (Phase 2)
+ * Main container for battle visualization with PixiJS rendering
  * Displays battle state information like current turn, units, and health bars
  */
 
@@ -33,12 +34,66 @@ export interface BattleViewerProps {
   height?: string;
 }
 
-export default function BattleViewer({
+export interface BattleViewerRef {
+  getBattleAnimator: () => BattleAnimator | null;
+  getRenderer: () => BattleRenderer | null;
+}
+
+const BattleViewer = forwardRef<BattleViewerRef, BattleViewerProps>(({
   battleState,
   onUnitClick,
   width = '100%',
   height = '600px'
-}: BattleViewerProps) {
+}, ref) => {
+  // Refs for PixiJS integration
+  const canvasContainerRef = useRef<HTMLDivElement>(null);
+  const rendererRef = useRef<BattleRenderer | null>(null);
+
+  // Expose methods via ref
+  useImperativeHandle(ref, () => ({
+    getBattleAnimator: () => rendererRef.current?.getBattleAnimator() || null,
+    getRenderer: () => rendererRef.current,
+  }));
+
+  // Initialize PixiJS renderer
+  useEffect(() => {
+    let mounted = true;
+
+    const initRenderer = async () => {
+      if (!canvasContainerRef.current || !mounted) return;
+
+      try {
+        const renderer = new BattleRenderer({
+          arenaWidth: 1000,
+          arenaHeight: 1000,
+          backgroundColor: 0x001122,
+          showDebugInfo: true, // Show FPS counter in Phase 1
+        });
+
+        await renderer.init(canvasContainerRef.current);
+
+        if (mounted) {
+          rendererRef.current = renderer;
+          console.log('PixiJS BattleRenderer initialized successfully');
+        } else {
+          renderer.cleanup();
+        }
+      } catch (error) {
+        console.error('Failed to initialize BattleRenderer:', error);
+      }
+    };
+
+    initRenderer();
+
+    // Cleanup on unmount
+    return () => {
+      mounted = false;
+      if (rendererRef.current) {
+        rendererRef.current.cleanup();
+        rendererRef.current = null;
+      }
+    };
+  }, []); // Only run once on mount
   const containerStyles: React.CSSProperties = {
     width,
     height,
@@ -72,20 +127,11 @@ export default function BattleViewer({
     fontFamily: 'monospace',
   };
 
-  const canvasPlaceholderStyles: React.CSSProperties = {
+  const canvasContainerStyles: React.CSSProperties = {
     flex: 1,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#0f172a',
     position: 'relative',
     minHeight: '400px',
-  };
-
-  const placeholderTextStyles: React.CSSProperties = {
-    color: '#6b7280',
-    fontSize: '1rem',
-    fontStyle: 'italic',
+    backgroundColor: '#0f172a',
   };
 
   const unitsOverlayStyles: React.CSSProperties = {
@@ -199,10 +245,8 @@ export default function BattleViewer({
         </div>
       </div>
 
-      <div style={canvasPlaceholderStyles}>
-        <p style={placeholderTextStyles}>
-          PixiJS Canvas Placeholder (Phase 2)
-        </p>
+      <div ref={canvasContainerRef} style={canvasContainerStyles}>
+        {/* PixiJS canvas will be injected here */}
 
         <div style={unitsOverlayStyles}>
           {battleState.units
@@ -224,4 +268,8 @@ export default function BattleViewer({
       )}
     </div>
   );
-}
+});
+
+BattleViewer.displayName = 'BattleViewer';
+
+export default BattleViewer;
