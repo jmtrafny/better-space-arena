@@ -115,10 +115,10 @@ Orchestrator
 Launching 4 architecture agents in parallel:
 
 Task(description="Design data models",
-     prompt="Design component, unit, battle schemas...")
+     prompt="Design user, product, order schemas...")
 
-Task(description="Design simulation",
-     prompt="Design battle simulation algorithm...")
+Task(description="Design business logic",
+     prompt="Design order processing algorithm...")
 
 Task(description="Design APIs",
      prompt="Design public interfaces...")
@@ -400,7 +400,7 @@ Estimated time for typical phase:
 | Planning | 30 min | 30 min | 30 min | 30 min |
 | Architecture | 90 min | 30 min | 45 min | Variable |
 | Core Dev | 120 min | 45 min | 60 min | Variable |
-| Battle Engine | 90 min | 90 min* | 90 min | Variable |
+| Complex Module | 90 min | 90 min* | 90 min | Variable |
 | Testing | 60 min | 20 min | 30 min | Variable |
 | Documentation | 60 min | 25 min | 35 min | Variable |
 | **TOTAL** | **450 min** | **240 min** | **290 min** | **~280 min** |
@@ -475,13 +475,13 @@ Estimated time for typical phase:
 
 ## Common Questions
 
-### Q: Which pattern should I use for this project?
+### Q: Which pattern should I use for my project?
 
-**A:** **Hybrid is recommended** for the Battle Automata Engine because:
-- Good balance for weekend timeline
+**A:** **Hybrid is recommended** for most projects because:
+- Good balance between speed and complexity
 - Clear learning value
 - Significant speed boost without overwhelming complexity
-- Natural validation gates
+- Natural validation gates at phase boundaries
 
 ### Q: Can I switch patterns mid-project?
 

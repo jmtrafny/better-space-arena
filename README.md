@@ -1,277 +1,327 @@
-# Battle Automata Engine
+# Multi-Agent Development System
 
-A theme-agnostic engine for simulating deterministic battles between customizable automata, inspired by the mobile game Space Arena.
+A sophisticated multi-agent orchestration system for Claude Code, featuring parallel execution, multiple workflow patterns, and advanced coordination strategies.
 
-## Project Status
+> **Ready to use:** A clean, domain-agnostic multi-agent framework for any software development project.
 
-🏗️ **Enhanced Multi-Agent System** - Advanced workflow patterns ready
+## Overview
 
-This repository contains an **advanced multi-agent system** with:
-- 🚀 **Parallel Agent Execution** - Launch concurrent agents for speed
-- 🎯 **Multiple Workflow Patterns** - Sequential, Parallel, Hybrid, Adaptive
-- 🤝 **Specialized Coordinators** - Synthesis and integration experts
-- 📚 **Comprehensive Documentation** - Complete learning resources
+This repository provides a complete **multi-agent development framework** that allows you to:
 
-**NEW in V2:** Parallel execution using Task tool for 40-75% faster development!
+- 🚀 **Execute agents in parallel** for 40-75% faster development
+- 🎯 **Choose optimal workflow patterns** (Sequential, Parallel, Hybrid, Adaptive)
+- 🤝 **Coordinate specialized agents** for complex projects
+- 📊 **Track metrics** to optimize your workflow
+- 🔄 **Synthesize results** from concurrent agent work
 
 ## Quick Start
 
-### Recommended: Enhanced Orchestrator V2
+### 1. Use the Enhanced Orchestrator
 
 ```bash
-/orchestrator-v2 prompt.md
+/orchestrator-v2 <your-requirements-file.md>
 ```
 
-The enhanced orchestrator will:
-1. Help you **choose the best workflow pattern** for your needs
-2. **Launch agents in parallel** when beneficial for speed
-3. **Synthesize results** from concurrent work
-4. **Adapt strategy** based on each phase's needs
-5. **Track metrics** to show you what works best
+The orchestrator will:
+1. Analyze your project characteristics
+2. Recommend the best workflow pattern
+3. Launch agents (in parallel when beneficial)
+4. Synthesize results and manage human validation gates
+5. Track time saved and quality metrics
 
-### Choose Your Workflow Pattern
+### 2. Choose Your Workflow Pattern
 
-| Pattern | Best For | Speed | Complexity |
-|---------|----------|-------|------------|
-| **Sequential** | Learning basics | ⭐⭐ | ⭐ Easy |
-| **Parallel** | Maximum speed | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ Complex |
-| **Hybrid** | Most projects (RECOMMENDED) | ⭐⭐⭐⭐ | ⭐⭐⭐ Moderate |
-| **Adaptive** | Experienced users | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ Very Complex |
+| Pattern | Best For | Speed | Complexity | Time Savings |
+|---------|----------|-------|------------|--------------|
+| **Sequential** | Learning, high dependencies | ⭐⭐ | ⭐ Easy | Baseline |
+| **Parallel** | Research, maximum speed | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ Complex | 60-75% |
+| **Hybrid** | Most projects (RECOMMENDED) | ⭐⭐⭐⭐ | ⭐⭐⭐ Moderate | 40-50% |
+| **Adaptive** | Experienced users | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ Very Complex | 50-60% |
 
-**Not sure?** The orchestrator will help you decide!
+**Not sure?** Start with **Hybrid** - it provides the best balance.
 
-See [docs/agentic-patterns/WHEN_TO_USE_WHAT.md](docs/agentic-patterns/WHEN_TO_USE_WHAT.md) for guidance.
-
-## What Gets Built
-
-The multi-agent system will create:
-
-### Core Engine
-- **Component System** - Modular building blocks for units
-- **Unit Builder** - Assemble units from components
-- **Battle Simulator** - Deterministic combat simulation
-- **Event Logger** - Complete battle history for replay
-
-### Features
-- Theme-agnostic architecture (space ships, mechs, armies, etc.)
-- Data-driven configuration (JSON/YAML)
-- Deterministic, reproducible battles
-- CLI tool for running simulations
-- Comprehensive test suite
-
-### Deliverables
-- Working simulation engine
-- Example theme with components
-- Command-line interface
-- Complete documentation
-- Test scenarios
-
-## Project Vision
-
-Build combat units from modular components, then watch them battle autonomously in deterministic simulations. The system is designed to support multiple themes:
-- 🚀 Space ships (inspired by Space Arena)
-- 🤖 Mech robots (Pacific Rim style)
-- ⚓ Naval fleets
-- ⚔️ Fantasy armies
-- 🎨 Custom themes
-
-## Multi-Agent System V2
+## Available Agents
 
 ### Core Agents
 
-| Agent | Role | Execution |
-|-------|------|-----------|
-| **Orchestrator V2** | Master coordinator with pattern selection | Sequential |
-| **Project Manager** | Planning & coordination | Sequential |
-| **Architect** | System design | Can run in parallel (3+ specialists) |
-| **Developer** | Implementation | Can run in parallel (per feature) |
-| **QA Tester** | Quality assurance | Can run in parallel (per test area) |
-| **Documentation** | Technical writing | Can run in parallel (per doc type) |
+Located in `.claude/commands/`:
 
-### Coordinators (NEW!)
-
-| Coordinator | Purpose |
-|-------------|---------|
-| **Parallel Coordinator** | Launches and manages concurrent agents |
-| **Task Synthesizer** | Merges outputs from parallel agents |
+- **`orchestrator-v2.md`** - Enhanced orchestrator with parallel execution
+- **`architect.md`** - System design and architecture
+- **`developer.md`** - Code implementation
+- **`qa-tester.md`** - Quality assurance and testing
+- **`documentation.md`** - Technical writing
+- **`project-manager.md`** - Planning and coordination
 
 ### Workflow Patterns
 
-| Pattern | Description | Files |
-|---------|-------------|-------|
-| **Sequential** | Traditional waterfall | `.claude/commands/patterns/sequential-workflow.md` |
-| **Parallel** | Maximum concurrency | `.claude/commands/patterns/parallel-workflow.md` |
-| **Hybrid** | Sequential phases, parallel tasks | `.claude/commands/patterns/hybrid-workflow.md` |
-| **Adaptive** | Context-driven strategy per phase | `.claude/commands/patterns/adaptive-workflow.md` |
+Located in `.claude/commands/patterns/`:
+
+- **`sequential-workflow.md`** - Traditional waterfall approach
+- **`parallel-workflow.md`** - Maximum concurrency
+- **`hybrid-workflow.md`** - Sequential phases, parallel tasks
+- **`adaptive-workflow.md`** - Dynamic per-phase optimization
+
+### Coordinators
+
+Located in `.claude/commands/coordinators/`:
+
+- **`parallel-coordinator.md`** - Manages concurrent agents
+- **`task-synthesizer.md`** - Merges parallel outputs
 
 ## Documentation
 
 ### Getting Started
-- **[prompt.md](prompt.md)** - Complete project requirements
-- **[HOW_TO_USE_MULTI_AGENT.md](HOW_TO_USE_MULTI_AGENT.md)** - Multi-agent usage guide
 
-### Learning Resources
-- **[docs/agentic-patterns/AGENTIC_PATTERNS.md](docs/agentic-patterns/AGENTIC_PATTERNS.md)** - Complete pattern guide
-- **[docs/agentic-patterns/WHEN_TO_USE_WHAT.md](docs/agentic-patterns/WHEN_TO_USE_WHAT.md)** - Decision framework
-- **[docs/agentic-patterns/PARALLEL_EXECUTION_GUIDE.md](docs/agentic-patterns/PARALLEL_EXECUTION_GUIDE.md)** - Technical guide
-- **[docs/agentic-patterns/LESSONS_LEARNED_TEMPLATE.md](docs/agentic-patterns/LESSONS_LEARNED_TEMPLATE.md)** - Track your learnings
+- **`HOW_TO_USE_MULTI_AGENT.md`** - Complete usage guide
+- **`docs/agentic-patterns/WHEN_TO_USE_WHAT.md`** - Pattern selection guide
+- **`docs/agentic-patterns/PARALLEL_EXECUTION_GUIDE.md`** - Parallel execution details
 
-### Agent Definitions
-- **[.claude/commands/](.claude/commands/)** - Core agents
-- **[.claude/commands/patterns/](.claude/commands/patterns/)** - Workflow patterns
-- **[.claude/commands/coordinators/](.claude/commands/coordinators/)** - Parallel coordinators
+### Advanced Topics
 
-## Timeline
+- **`docs/agentic-patterns/AGENTIC_PATTERNS.md`** - Comprehensive pattern guide
 
-**Target:** Weekend project (2 days)
+## Example Usage
 
-- **Day 1:** Core architecture and data structures
-- **Day 2:** Combat simulation, polish, testing, docs
-
-## Getting Started
-
-### Prerequisites
-
-- Claude Code with slash command support
-- Git for version control
-- Python 3.10+ (will be set up by agents)
-
-### Initialize Project (V2 Enhanced)
+### Sequential Pattern (Simple)
 
 ```bash
-# Recommended: Start with enhanced orchestrator
-/orchestrator-v2 prompt.md
+/orchestrator-v2 my-project-requirements.md
 ```
 
-The V2 orchestrator offers:
-- Pattern selection guidance
-- Parallel agent execution
-- Time savings metrics
-- Adaptive strategies
+Select "Sequential" when prompted. Agents run one at a time.
 
-**Or use a specific pattern:**
+### Hybrid Pattern (Recommended)
+
 ```bash
-/hybrid-workflow prompt.md    # Recommended for this project
-/parallel-workflow prompt.md  # Maximum speed
-/sequential-workflow prompt.md  # Learning basics
-/adaptive-workflow prompt.md  # Advanced users
+/orchestrator-v2 my-project-requirements.md
 ```
 
-### Learning Value
-
-This project is designed as a **learning laboratory** for agentic workflows:
-
-**You'll learn:**
-- ✅ How to coordinate multiple AI agents
-- ✅ When to use parallel vs sequential execution
-- ✅ How to synthesize diverse agent outputs
-- ✅ Trade-offs between different patterns
-- ✅ Real-world agent coordination strategies
-
-**Professional Applications:**
-- Team coordination patterns
-- Multi-LLM system design
-- Parallel workflow optimization
-- Context-aware decision making
-
-Even if you can't use autonomous agents at work, these **coordination principles transfer** to team management, system architecture, and AI system design.
-
-## Architecture Overview
+Select "Hybrid" when prompted. Sequential phases with parallel tasks:
 
 ```
-battle-automata-engine/
-├── src/              # Core engine code
-│   ├── core/        # Component, Unit, Battle classes
-│   ├── mechanics/   # Combat, movement, targeting
-│   └── utils/       # Loading, validation, logging
-├── data/            # Game data (components, units, battles)
-│   └── themes/      # Theme definitions
-├── tests/           # Test suite
-├── docs/            # Documentation
-└── examples/        # Usage examples
+Phase 1: Planning (Sequential)
+    ↓
+Phase 2: Architecture (PARALLEL)
+    ├─→ Data Model Agent
+    ├─→ API Design Agent
+    └─→ Integration Agent
+    ↓ [Synthesis]
+    ↓ [Human Gate]
+Phase 3: Development (PARALLEL)
+    ├─→ Feature A Agent
+    ├─→ Feature B Agent
+    └─→ Feature C Agent
+    ↓ [Integration]
 ```
 
-## Key Concepts
+### Parallel Pattern (Maximum Speed)
 
-### Components
-Modular parts that make up units:
-- **Offensive**: Weapons, turrets
-- **Defensive**: Armor, shields
-- **Mobility**: Engines, thrusters
-- **Support**: Power, sensors
-
-### Units
-Assemblies of components with:
-- Layout and positioning
-- Resource constraints
-- Validation rules
-
-### Battles
-Deterministic simulations featuring:
-- Turn-based with time steps
-- Positional combat
-- Component damage
-- Complete event logging
-
-## Development Workflow
-
-The multi-agent system follows this workflow:
-
-```
-Orchestrator → Project Manager → Architect → Developer ↔ QA Tester → Documentation
-                      ↓                                        ↓              ↓
-                Human Gates                              Human Gates    Human Gate
+```bash
+/orchestrator-v2 my-project-requirements.md
 ```
 
-Human validation is requested at key milestones for approval and feedback.
+Select "Parallel" for maximum speed. All independent work runs concurrently.
+
+## Workflow Patterns in Detail
+
+### Sequential Pattern
+
+**Best for:** Learning, highly coupled systems, simple projects
+
+**How it works:** Agents run one at a time in waterfall fashion
+
+**Time:** Baseline (100%)
+
+### Parallel Pattern
+
+**Best for:** Research, exploration, independent features
+
+**How it works:** All agents run concurrently, then synthesize
+
+**Time:** ~25-40% of sequential (60-75% faster)
+
+### Hybrid Pattern (RECOMMENDED)
+
+**Best for:** Most real-world projects
+
+**How it works:** Sequential phases, parallel tasks within each phase
+
+**Time:** ~50-60% of sequential (40-50% faster)
+
+**Example:**
+```
+Sequential: 10 hours
+Hybrid: 5-6 hours (save 4-5 hours)
+Parallel: 2.5-4 hours (save 6-7.5 hours, but harder to manage)
+```
+
+### Adaptive Pattern
+
+**Best for:** Experienced users wanting per-phase optimization
+
+**How it works:** Chooses best strategy for each phase dynamically
+
+**Time:** ~40-50% of sequential (50-60% faster)
+
+## Human Validation Gates
+
+The system includes human validation checkpoints:
+
+```markdown
+🚦 HUMAN VALIDATION REQUIRED
+
+Phase: Architecture
+Pattern Used: Hybrid
+What Needs Approval: System design
+
+Summary:
+- Designed data model
+- Defined API interfaces
+- Created integration architecture
+
+Deliverables:
+- [Link to architecture doc]
+
+To Proceed:
+- ✅ Approved - continue
+- 📝 Feedback - [adjustments needed]
+- ❌ Rejected - [concerns]
+```
+
+## Metrics Tracking
+
+The orchestrator tracks:
+
+| Metric | Purpose |
+|--------|---------|
+| Time Saved | ROI of parallel execution |
+| Synthesis Effort | Coordination overhead |
+| Quality | Bug count, rework needed |
+| Agent Failures | Reliability tracking |
+| Pattern Switches | Pattern fit assessment |
+
+## Customization
+
+### Create Your Own Agent
+
+1. Create a new file in `.claude/commands/`:
+
+```bash
+touch .claude/commands/my-custom-agent.md
+```
+
+2. Follow the template structure:
+
+```markdown
+---
+description: Brief description of agent role
+---
+
+# Agent Name
+
+You are a **[Role]** for [project type].
+
+## Your Responsibilities
+
+- Responsibility 1
+- Responsibility 2
+
+## Instructions
+
+Step-by-step instructions for the agent...
+
+## Output Format
+
+Expected deliverables...
+```
+
+3. Invoke your custom agent:
+
+```bash
+/my-custom-agent <context>
+```
+
+### Create Your Own Workflow Pattern
+
+1. Create a new file in `.claude/commands/patterns/`:
+
+```bash
+touch .claude/commands/patterns/my-pattern.md
+```
+
+2. Define the workflow structure
+3. Reference it in your orchestrator calls
+
+## Best Practices
+
+### When to Use Parallel Execution
+
+✅ **Good candidates for parallel:**
+- Independent features
+- Different architectural areas
+- Separate test suites
+- Different documentation types
+
+❌ **Poor candidates for parallel:**
+- Tightly coupled code
+- Core engine/kernel
+- Sequential algorithms
+- Single coherent document
+
+### Synthesis Tips
+
+When merging parallel work:
+
+1. Review all outputs thoroughly
+2. Resolve conflicts with clear rationale
+3. Document integration decisions
+4. Test integrated result
+
+### Human Gate Guidelines
+
+Place validation gates at:
+- Phase boundaries
+- Before irreversible decisions
+- After parallel synthesis
+- Major deliverables
+
+## Troubleshooting
+
+### Issue: Parallel agents conflict
+
+**Solution:** Use task-synthesizer or switch to hybrid/sequential pattern
+
+### Issue: Synthesis takes too long
+
+**Solution:** Reduce number of parallel agents or provide clearer specifications
+
+### Issue: Pattern not working
+
+**Solution:** Switch patterns mid-project (it's okay!)
 
 ## Contributing
 
-This project is developed through the multi-agent system. To contribute:
+This multi-agent system is designed to be extended. Contributions welcome:
 
-1. Review the [prompt.md](prompt.md) requirements
-2. Use the appropriate agent for your task
-3. Follow the workflow and validation gates
-4. Ensure tests pass before moving forward
-
-## Inspiration
-
-Inspired by **Space Arena** - a mobile game where players build spaceships from modular components and watch them fight autonomously in deterministic battles.
-
-The core concept: design → build → simulate → iterate.
+1. New agent types
+2. New workflow patterns
+3. New coordinators
+4. Documentation improvements
+5. Example projects
 
 ## License
 
-To be determined (will be set by project owner)
+[Specify your license]
 
-## Status
+## Credits
 
-✅ **Enhanced multi-agent system V2 complete!**
-- ✅ 4 workflow patterns implemented
-- ✅ Parallel execution with Task tool
-- ✅ Specialized coordinators ready
-- ✅ Comprehensive documentation
-- ⏳ Architecture design pending
-- ⏳ Implementation pending
-- ⏳ Testing pending
-- ⏳ Engine documentation pending
-
-**Ready to start development!** Run `/orchestrator-v2 prompt.md` to begin.
-
-## What Makes This Special
-
-This isn't just a game engine project - it's an **advanced multi-agent coordination system** that demonstrates:
-
-1. **Parallel Agent Execution** - True concurrent AI agent coordination
-2. **Multiple Workflow Patterns** - 4 different strategies to choose from
-3. **Synthesis & Integration** - Combining diverse agent outputs
-4. **Learning Laboratory** - Experiment and compare approaches
-5. **Professional Transferable Skills** - Coordination patterns for work
-
-**Time Savings:** 40-75% faster than sequential approaches!
+Built using Claude Code's multi-agent capabilities with the Task tool for parallel execution.
 
 ---
 
-Built with ❤️ using Claude's enhanced multi-agent development system V2
+**Ready to build something?**
 
-**Contributing:** This is a learning project. Feel free to fork, experiment with different patterns, and share your learnings!
+```bash
+/orchestrator-v2 your-project-requirements.md
+```

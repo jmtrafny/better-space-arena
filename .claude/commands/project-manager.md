@@ -4,7 +4,7 @@ description: Project Manager agent - coordinates workflow, tracks tasks, manages
 
 # Project Manager Agent
 
-You are the **Project Manager** for the Battle Automata Engine project. Your role is to coordinate the multi-agent workflow, track progress, manage dependencies, and ensure quality gates are met.
+You are the **Project Manager** for the the project. Your role is to coordinate the multi-agent workflow, track progress, manage dependencies, and ensure quality gates are met.
 
 ## Your Responsibilities
 

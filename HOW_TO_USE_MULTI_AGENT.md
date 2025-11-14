@@ -6,24 +6,31 @@ This project uses a sophisticated multi-agent approach to coordinate development
 
 ### 1. Start the Project
 
-To kick off the entire multi-agent workflow:
+To kick off the entire multi-agent workflow with advanced features:
 
 ```bash
-/orchestrator prompt.md
+/orchestrator-v2 your-requirements.md
 ```
 
 This will:
-- Read the project requirements from `prompt.md`
-- Initialize the project workflow
+- Read the project requirements from your requirements file
+- Analyze project characteristics and recommend optimal workflow pattern
+- Enable parallel agent execution for faster development (40-75% time savings)
 - Coordinate all agents through the development lifecycle
 - Pause at human validation gates for your approval
+- Track metrics and synthesize results from concurrent work
+
+**For simpler projects**, you can use the basic orchestrator:
+```bash
+/orchestrator your-requirements.md
+```
 
 ### 2. Let the Agents Work
 
 The orchestrator will automatically coordinate:
 1. **Project Manager** - Creates detailed task breakdown
 2. **Architect** - Designs system architecture
-3. **Developer** - Implements features
+3. **Developer** - Implements features (can run in parallel)
 4. **QA Tester** - Tests and validates
 5. **Documentation** - Creates comprehensive docs
 
@@ -37,17 +44,42 @@ You'll be asked to approve at key milestones:
 
 ## Available Agents
 
-### `/orchestrator [context]`
-**Master coordinator** - Manages the entire workflow from start to finish.
+### `/orchestrator-v2 [requirements-file]`
+**Enhanced coordinator** - Manages workflow with parallel execution, multiple patterns, and advanced coordination.
 
 **Use when:**
-- Starting a new project
-- Need coordination across all phases
+- Starting any new project (RECOMMENDED)
+- Want optimal workflow pattern selection
+- Need parallel agent execution for speed
 - Managing complex multi-phase work
+- Want time savings and metrics tracking
+
+**Features:**
+- ✅ Parallel agent execution (40-75% faster)
+- ✅ Multiple workflow patterns (Sequential, Parallel, Hybrid, Adaptive)
+- ✅ Intelligent pattern recommendations
+- ✅ Result synthesis from concurrent agents
+- ✅ Human validation gates
+- ✅ Metrics and time tracking
 
 **Example:**
 ```bash
-/orchestrator prompt.md
+/orchestrator-v2 my-project-requirements.md
+```
+
+---
+
+### `/orchestrator [requirements-file]`
+**Basic coordinator** - Simple sequential workflow management.
+
+**Use when:**
+- Very simple projects
+- Prefer straightforward sequential execution
+- Learning the multi-agent system basics
+
+**Example:**
+```bash
+/orchestrator my-requirements.md
 ```
 
 ---
@@ -79,7 +111,7 @@ You'll be asked to approve at key milestones:
 
 **Example:**
 ```bash
-/architect Design the component system and battle simulation architecture
+/architect Design the database schema and API architecture
 ```
 
 ---
@@ -95,7 +127,7 @@ You'll be asked to approve at key milestones:
 
 **Example:**
 ```bash
-/developer Implement the component loading system from JSON files
+/developer Implement the user authentication system with JWT tokens
 ```
 
 ---
@@ -107,11 +139,11 @@ You'll be asked to approve at key milestones:
 - Need to test implementations
 - Validate feature functionality
 - Find bugs and edge cases
-- Verify deterministic behavior
+- Verify correct behavior
 
 **Example:**
 ```bash
-/qa-tester Test the battle simulation for determinism and correctness
+/qa-tester Test the payment processing for edge cases and correctness
 ```
 
 ---
@@ -135,11 +167,11 @@ You'll be asked to approve at key milestones:
 ### Full Project Workflow
 
 ```bash
-# Start the entire project
-/orchestrator prompt.md
+# Start the entire project with enhanced orchestration
+/orchestrator-v2 your-requirements.md
 ```
 
-The orchestrator will guide you through:
+The orchestrator-v2 will guide you through:
 
 1. **Planning Phase**
    - PM creates project plan
@@ -167,33 +199,67 @@ You can also invoke agents directly for specific tasks:
 
 ```bash
 # Get a project plan
-/project-manager Break down the battle simulation into tasks
+/project-manager Break down the e-commerce checkout flow into tasks
 
 # Design a specific system
-/architect Design the damage calculation system
+/architect Design the authentication and authorization system
 
 # Implement a feature
-/developer Implement unit loading from YAML files
+/developer Implement user registration with email verification
 
 # Test a feature
-/qa-tester Test the component validation logic
+/qa-tester Test the shopping cart logic
 
 # Document something
-/documentation Create API docs for the Battle class
+/documentation Create API docs for the User service
 ```
+
+## Workflow Patterns
+
+Orchestrator-v2 supports multiple workflow patterns:
+
+### Sequential Pattern
+- **Best for:** Simple projects, high dependencies, learning
+- **Speed:** Baseline
+- **Complexity:** Low
+- Agents work one at a time in order
+
+### Parallel Pattern
+- **Best for:** Research, independent tasks, maximum speed
+- **Speed:** 60-75% faster
+- **Complexity:** High
+- Multiple agents work simultaneously
+
+### Hybrid Pattern (RECOMMENDED)
+- **Best for:** Most projects
+- **Speed:** 40-50% faster
+- **Complexity:** Moderate
+- Sequential phases with parallel tasks within phases
+
+### Adaptive Pattern
+- **Best for:** Experienced users, complex projects
+- **Speed:** 50-60% faster
+- **Complexity:** Very high
+- Dynamically chooses best strategy per phase
+
+**Not sure?** Orchestrator-v2 will recommend the best pattern for your project.
 
 ## Tips for Success
 
-### 1. Start with the Orchestrator
+### 1. Start with Orchestrator-v2
 
-For new projects or major phases, always start with `/orchestrator`. It will manage the workflow for you.
+For new projects or major phases, always start with `/orchestrator-v2`. It will:
+- Recommend the best workflow pattern for your project
+- Enable parallel execution where beneficial
+- Save 40-75% development time
+- Manage the complete workflow for you
 
 ### 2. Be Specific in Requests
 
 When invoking agents directly, provide clear context:
 
 ❌ Bad: `/developer build it`
-✅ Good: `/developer Implement the Movement class according to the architecture, with grid-based positioning`
+✅ Good: `/developer Implement the user authentication according to the architecture, with JWT tokens and refresh tokens`
 
 ### 3. Use PM for Coordination
 
@@ -218,7 +284,7 @@ Always run QA after development:
 Don't wait until the end to document:
 
 ```bash
-/documentation Document the component system now that it's implemented
+/documentation Document the authentication system now that it's implemented
 ```
 
 ## Multi-Agent Patterns
@@ -227,26 +293,26 @@ Don't wait until the end to document:
 
 ```bash
 # 1. Plan the feature
-/project-manager Plan implementation of weapon targeting system
+/project-manager Plan implementation of user authentication system
 
 # 2. Design the feature
-/architect Design the targeting system architecture
+/architect Design the authentication architecture with JWT
 
 # 3. Implement
-/developer Implement targeting system per architecture
+/developer Implement authentication per architecture
 
 # 4. Test
-/qa-tester Test targeting system for correctness and edge cases
+/qa-tester Test authentication for security and edge cases
 
 # 5. Document
-/documentation Document the targeting system API
+/documentation Document the authentication API
 ```
 
 ### Pattern 2: Bug Fixing
 
 ```bash
 # 1. Test to find bugs
-/qa-tester Test the combat simulation thoroughly
+/qa-tester Test the payment processing thoroughly
 
 # 2. Fix bugs
 /developer Fix the bugs found by QA
@@ -259,13 +325,13 @@ Don't wait until the end to document:
 
 ```bash
 # 1. Plan refactor
-/project-manager Plan refactoring of the data loading system
+/project-manager Plan refactoring of the data access layer
 
 # 2. Design new approach
-/architect Design improved data loading architecture
+/architect Design improved data access architecture
 
 # 3. Implement
-/developer Refactor data loading per new design
+/developer Refactor data access per new design
 
 # 4. Test
 /qa-tester Verify refactored system works correctly
@@ -279,7 +345,7 @@ Don't wait until the end to document:
 Agents are designed to work together:
 
 ```
-Orchestrator
+Orchestrator-v2
     ↓
 Project Manager ←→ All agents (coordination)
     ↓
@@ -342,26 +408,36 @@ The multi-agent system uses this structure:
 ```
 .claude/
 └── commands/
-    ├── orchestrator.md      # Master coordinator
-    ├── project-manager.md   # Project management
-    ├── architect.md         # System design
-    ├── developer.md         # Implementation
-    ├── qa-tester.md        # Quality assurance
-    └── documentation.md     # Technical writing
+    ├── orchestrator.md          # Basic coordinator
+    ├── orchestrator-v2.md       # Enhanced coordinator (RECOMMENDED)
+    ├── project-manager.md       # Project management
+    ├── architect.md             # System design
+    ├── developer.md             # Implementation
+    ├── qa-tester.md            # Quality assurance
+    ├── documentation.md         # Technical writing
+    ├── patterns/                # Workflow patterns
+    │   ├── sequential-workflow.md
+    │   ├── parallel-workflow.md
+    │   ├── hybrid-workflow.md
+    │   └── adaptive-workflow.md
+    └── coordinators/            # Advanced coordination
+        ├── parallel-coordinator.md
+        └── task-synthesizer.md
 
-prompt.md                    # Project requirements (input)
-HOW_TO_USE_MULTI_AGENT.md  # This file
+docs/agentic-patterns/          # Multi-agent documentation
+HOW_TO_USE_MULTI_AGENT.md      # This file
+README.md                       # Overview
 ```
 
 ## Best Practices
 
-1. **Trust the Process**: The multi-agent workflow is designed for quality
-2. **Be Patient**: Let each agent complete their work
-3. **Review Thoroughly**: Pay attention at validation gates
-4. **Provide Feedback**: Clear feedback helps agents improve
-5. **Iterate**: It's okay to go back and refine
-6. **Document Decisions**: Agents will track key decisions
-7. **Test Often**: QA early and often prevents issues
+1. **Use Orchestrator-v2**: Get parallel execution and optimal workflow patterns
+2. **Trust the Process**: The multi-agent workflow is designed for quality
+3. **Choose the Right Pattern**: Hybrid pattern works well for most projects
+4. **Review Thoroughly**: Pay attention at validation gates
+5. **Provide Feedback**: Clear feedback helps agents improve
+6. **Test Often**: QA early and often prevents issues
+7. **Leverage Parallelism**: Let multiple agents work concurrently when possible
 
 ## Getting Help
 
@@ -377,12 +453,10 @@ The Project Manager can always provide status and guidance.
 
 ## Let's Build! 🚀
 
-To start building the Battle Automata Engine:
+To start building your project:
 
 ```bash
-/orchestrator prompt.md
+/orchestrator-v2 your-requirements.md
 ```
 
 The agents will handle the rest, coordinating a professional development workflow from planning through delivery.
-
-Good luck with your weekend project!

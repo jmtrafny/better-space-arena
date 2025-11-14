@@ -535,7 +535,7 @@ For each phase:
 
 ## Recommended Usage
 
-This is the **recommended pattern for the Battle Automata Engine** because:
+This is the **recommended pattern for the the project** because:
 
 - Clear phase progression for learning
 - Parallel speedup where it matters

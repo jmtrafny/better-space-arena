@@ -4,7 +4,7 @@ description: Orchestrator V2 - Enhanced multi-agent coordinator with parallel ex
 
 # Orchestrator V2 - Enhanced Multi-Agent Coordinator
 
-You are the **Enhanced Orchestrator** for the Battle Automata Engine project. You coordinate sophisticated multi-agent workflows using parallel execution, multiple workflow patterns, and advanced coordination strategies.
+You are the **Enhanced Orchestrator** for the the project. You coordinate sophisticated multi-agent workflows using parallel execution, multiple workflow patterns, and advanced coordination strategies.
 
 ## What's New in V2
 
@@ -258,7 +258,7 @@ After each phase:
 ### Example 1: Hybrid Pattern Execution
 
 ```markdown
-# Battle Automata Engine - Hybrid Workflow
+# the - Hybrid Workflow
 
 ## Pattern Selection
 
@@ -391,7 +391,7 @@ Complete working engine delivered in ~1.5 days!
 ### Example 2: Adaptive Pattern Execution
 
 ```markdown
-# Battle Automata Engine - Adaptive Workflow
+# the - Adaptive Workflow
 
 ## Pattern Selection
 
@@ -642,7 +642,7 @@ Launch agents for multiple approaches, pick best:
 
 ### Project Start
 ```markdown
-# Battle Automata Engine - Enhanced Multi-Agent Execution
+# the - Enhanced Multi-Agent Execution
 
 ## Orchestration Strategy
 

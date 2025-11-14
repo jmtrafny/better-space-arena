@@ -280,17 +280,17 @@ Different patterns work better for different phases:
 
 ## Final Recommendations
 
-### For This Battle Automata Engine Project:
+### General Guidance:
 
-**Recommended:** **Hybrid Pattern**
+**Recommended for most projects:** **Hybrid Pattern**
 
 **Why:**
-- ✅ Weekend timeline benefits from speed
-- ✅ Phases have parallelizable work
-- ✅ Not too complex for first advanced pattern
+- ✅ Good balance of speed and complexity
+- ✅ Most projects have some parallelizable work
+- ✅ Not too complex for newcomers
 - ✅ Great learning value
-- ✅ Natural validation gates
-- ✅ Good success rate
+- ✅ Natural validation gates at phase boundaries
+- ✅ Good success rate across different project types
 
 **Alternative:** Sequential if this is your first multi-agent project ever.
 

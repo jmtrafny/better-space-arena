@@ -417,7 +417,7 @@ Rationale: Plugin system is good long-term but adds complexity. For MVP, use sim
 
 ### Synthesized Architecture
 
-# Battle Automata Engine - Unified Architecture
+# the project - Unified Architecture
 
 ## Data Model (from Agent 1 + refinements)
 [Agent 1's schema system]
