@@ -1,0 +1,33 @@
+# Composite Armor Mk1 - Balanced protection
+
+id: composite_armor_mk1
+name: "Composite Armor Plate Mk1"
+type: defensive
+category: armor
+
+description: >
+  Balanced composite armor providing moderate protection
+  against all damage types. Good all-around choice.
+
+armor_type: composite
+
+stats:
+  armor_value: 100
+  coverage: 0.8        # Covers 80% of unit
+  durability: 300      # Armor HP
+
+resistances:
+  kinetic_resist: 1.2   # 20% better vs kinetic
+  energy_resist: 1.0    # Normal vs energy
+  explosive_resist: 1.2 # 20% better vs explosive
+
+resources:
+  power_draw: 0        # Passive, no power needed
+  weight: 80           # kg
+  slots: 2             # Takes up space
+  cost: 150
+
+tags:
+  - armor
+  - composite
+  - balanced

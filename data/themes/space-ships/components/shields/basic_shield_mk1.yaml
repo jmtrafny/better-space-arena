@@ -1,0 +1,31 @@
+# Basic Shield Generator Mk1 - Energy shield
+
+id: basic_shield_mk1
+name: "Basic Shield Generator Mk1"
+type: defensive
+category: shield
+
+description: >
+  Basic energy shield with moderate capacity and recharge.
+  Better against energy weapons, weaker against kinetics.
+
+stats:
+  shield_strength: 200     # Shield HP
+  recharge_rate: 20.0      # HP/second
+  recharge_delay: 3.0      # Seconds before recharge starts
+  coverage: 1.0            # Full coverage
+
+# Shield absorption (>1 = better, <1 = worse)
+energy_absorption: 1.5     # 50% better vs energy
+kinetic_absorption: 0.8    # 20% worse vs kinetic
+
+resources:
+  power_draw: 20           # watts
+  weight: 60               # kg
+  slots: 2                 # grid slots
+  cost: 200                # credits
+
+tags:
+  - shield
+  - energy_shield
+  - anti_energy

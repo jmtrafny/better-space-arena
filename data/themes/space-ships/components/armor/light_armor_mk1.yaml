@@ -1,31 +1,27 @@
-# Light Armor Mk1 - Basic protection
-
+# Light Armor Plate Mk1
 id: light_armor_mk1
 name: "Light Armor Plate Mk1"
 type: defensive
 category: armor
-
-description: >
-  Lightweight composite armor providing basic protection.
-  Balanced resistance against all damage types.
+description: "Lightweight composite armor providing basic protection."
 
 armor_type: composite
 
 stats:
-  armor_value: 50
-  coverage: 0.6        # Covers 60% of unit
-  durability: 200      # Armor HP
+  armor_value: 80
+  coverage: 0.6
+  durability: 200
 
 resistances:
-  kinetic_resist: 1.0  # Normal vs kinetic
-  energy_resist: 1.0   # Normal vs energy
-  explosive_resist: 1.0  # Normal vs explosive
+  kinetic_resist: 1.0
+  energy_resist: 1.0
+  explosive_resist: 1.0
 
 resources:
-  power_draw: 0        # Passive, no power needed
-  weight: 75           # kg
-  slots: 1             # Takes up space
-  cost: 80
+  power_draw: 0
+  weight: 80
+  slots: 2
+  cost: 120
 
 tags:
   - light_armor

@@ -1,0 +1,48 @@
+# Missile Launcher Mk1 - Heavy explosive weapon
+
+id: missile_launcher_mk1
+name: "Missile Launcher Mk1"
+type: offensive
+category: weapon
+
+description: >
+  Heavy missile launcher with area-of-effect damage.
+  Slow fire rate but devastating against groups.
+  Effective against armor and shields.
+
+# Weapon-specific
+damage_type: explosive
+
+stats:
+  damage: 150
+  range: 200.0        # meters
+  fire_rate: 0.5      # shots/second
+  accuracy: 0.75      # 75% base hit chance
+  projectile_speed: 50.0  # m/s
+
+special:
+  armor_piercing: 0.2       # Some armor penetration
+  shield_penetration: 0.1   # Slight shield bypass
+  splash_radius: 20.0       # 20m AoE
+  splash_damage_falloff: 0.5
+  critical_chance: 0.05
+  critical_multiplier: 2.5
+
+targeting:
+  firing_arc: 180           # degrees
+  priority: weakest
+  ignore_allies: true
+
+# Resource costs
+resources:
+  power_draw: 75    # watts
+  weight: 120       # kg
+  slots: 2          # grid slots
+  cost: 300         # credits
+
+# Metadata
+tags:
+  - explosive_weapon
+  - area_of_effect
+  - anti_armor
+  - heavy_weapon

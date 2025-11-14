@@ -36,7 +36,7 @@ Maximum concurrency, full parallelism.
 - **Use when:** High independence, speed critical, research phase
 - **File:** `.claude/commands/patterns/parallel-workflow.md`
 
-### Pattern 3: Hybrid ⭐⭐⭐⭐⭐ (Balance) [RECOMMENDED]
+### Pattern 3: Hybrid ⭐⭐⭐⭐⭐ (Balance) 
 Sequential phases, parallel within phases.
 - **Use when:** Most projects, want balance
 - **File:** `.claude/commands/patterns/hybrid-workflow.md`
@@ -737,7 +737,7 @@ Thank you for using the enhanced multi-agent system!
 This enhanced orchestrator brings the full power of multi-agent coordination with parallelism, multiple workflow patterns, and sophisticated coordination strategies.
 
 **Choose your adventure:**
-- Recommend Hybrid for balanced approach
+- Hybrid for balanced approach
 - Try Adaptive for optimal per-phase strategy
 - Use Sequential for learning
 - Go Parallel for maximum speed

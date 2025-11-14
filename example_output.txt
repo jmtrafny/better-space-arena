@@ -1,0 +1,100 @@
+============================================================
+BATTLE AUTOMATA ENGINE - Example Battle
+============================================================
+
+Configuration:
+  Seed: 42
+  Max Turns: 1000
+  Max Duration: 100.0s
+  Arena: 1000.0x1000.0m
+  Starting positions: (100.0, 500.0) vs (900.0, 500.0)
+
+Running simulation...
+
+
+=== Battle Result ===
+Winner: team_a
+Reason: elimination
+
+Duration: 39.9s (399 turns)
+Accuracy: 80.0%
+
+Combat Stats:
+  Shots Fired: 15
+  Hits: 12
+  Misses: 3
+  Critical Hits: 0
+
+
+Sample Events (first 10):
+  [T0 @ 0.00s] battle_start: {'seed': 42, 'battlefield': {'width': 1000.0, 'height': 1000.0}}
+  [T1 @ 0.00s] turn_start: {}
+  [T1 @ 0.00s] movement: {'unit_id': 'unit_1', 'old_position': {'x': 100.0, 'y': 500.0}, 'new_position': {'x': 101.0, 'y': 500.0}, 'distance': 1.0}
+  [T1 @ 0.00s] movement: {'unit_id': 'unit_2', 'old_position': {'x': 900.0, 'y': 500.0}, 'new_position': {'x': 899.0, 'y': 500.0}, 'distance': 1.0}
+  [T1 @ 0.10s] turn_end: {}
+  [T2 @ 0.10s] turn_start: {}
+  [T2 @ 0.10s] movement: {'unit_id': 'unit_1', 'old_position': {'x': 101.0, 'y': 500.0}, 'new_position': {'x': 102.0, 'y': 500.0}, 'distance': 1.0}
+  [T2 @ 0.10s] movement: {'unit_id': 'unit_2', 'old_position': {'x': 899.0, 'y': 500.0}, 'new_position': {'x': 898.0, 'y': 500.0}, 'distance': 1.0}
+  [T2 @ 0.20s] turn_end: {}
+  [T3 @ 0.20s] turn_start: {}
+
+Total events logged: 1649
+
+Full results saved to: battle_result.json
+
+============================================================
+MULTIPLE BATTLE COMPARISON
+============================================================
+
+Seed   42: Winner=team_a, Turns=399, Hits= 12, Accuracy=80.0%
+Seed  123: Winner=team_a, Turns=386, Hits= 11, Accuracy=91.7%
+Seed  456: Winner=team_b, Turns=410, Hits= 10, Accuracy=50.0%
+Seed  789: Winner=team_a, Turns=410, Hits= 13, Accuracy=81.2%
+Seed 1000: Winner=team_b, Turns=386, Hits= 10, Accuracy=83.3%
+
+Win Distribution:
+  Team A: 3 wins
+  Team B: 2 wins
+
+============================================================
+DETERMINISM DEMONSTRATION
+============================================================
+
+Running same battle 5 times with seed=12345...
+
+Run 1: Winner=team_b, Turns=374, Hits=10, Events=1534
+Run 2: Winner=team_b, Turns=374, Hits=10, Events=1534
+Run 3: Winner=team_b, Turns=374, Hits=10, Events=1534
+Run 4: Winner=team_b, Turns=374, Hits=10, Events=1534
+Run 5: Winner=team_b, Turns=374, Hits=10, Events=1534
+
+VERIFIED: All 5 runs produced IDENTICAL results!
+  Same seed = Same battle = Perfect determinism
+
+============================================================
+STEP-BY-STEP SIMULATION
+============================================================
+
+Running battle step-by-step (showing every 5th turn)...
+
+Turn   0 @   0.0s: 0 events this turn
+  unit_1: pos=(100, 500), health=300
+  unit_2: pos=(900, 500), health=300
+Turn   5 @   0.5s: 4 events this turn
+  unit_1: pos=(105, 500), health=300
+  unit_2: pos=(895, 500), health=300
+Turn  10 @   1.0s: 4 events this turn
+  unit_1: pos=(110, 500), health=300
+  unit_2: pos=(890, 500), health=300
+Turn  15 @   1.5s: 4 events this turn
+  unit_1: pos=(115, 500), health=300
+  unit_2: pos=(885, 500), health=300
+Turn  20 @   2.0s: 4 events this turn
+  unit_1: pos=(120, 500), health=300
+  unit_2: pos=(880, 500), health=300
+
+Battle finished!
+
+============================================================
+Examples complete!
+============================================================

@@ -29,7 +29,7 @@ class Component:
     weight: int
     slots: int
 
-    # Metadata (frozen)
+    # Metadata (frozen) - with default, must be last
     tags: Tuple[str, ...] = ()
 
 
@@ -39,27 +39,39 @@ class Component:
 
 
 @dataclass(frozen=True)
-class WeaponComponent(Component):
+class WeaponComponent:
     """Immutable runtime weapon component (used in simulation)."""
 
-    # Core stats
+    # Identity (no defaults)
+    id: str
+    name: str
+
+    # Core stats (no defaults)
     damage_type: DamageType
     damage: int
     range: float
     fire_rate: float
     accuracy: float
-    projectile_speed: Optional[float]
+    power_draw: int
+    weight: int
+    slots: int
 
-    # Special properties
+    # Optional core stats
+    projectile_speed: Optional[float] = None
+
+    # Special properties (with defaults)
     armor_piercing: float = 0.0
     shield_penetration: float = 0.0
     splash_radius: Optional[float] = None
     critical_chance: float = 0.0
     critical_multiplier: float = 2.0
 
-    # Targeting
+    # Targeting (with defaults)
     firing_arc: float = 360.0
     targeting_priority: TargetingPriority = TargetingPriority.CLOSEST
+
+    # Metadata (with defaults)
+    tags: Tuple[str, ...] = ()
 
     def __post_init__(self) -> None:
         """Validate runtime invariants (should never fail if config was validated)."""
@@ -74,8 +86,12 @@ class WeaponComponent(Component):
 
 
 @dataclass(frozen=True)
-class ArmorComponent(Component):
+class ArmorComponent:
     """Immutable runtime armor component."""
+
+    # Identity
+    id: str
+    name: str
 
     # Stats
     armor_type: ArmorType
@@ -87,6 +103,14 @@ class ArmorComponent(Component):
     kinetic_resist: float
     energy_resist: float
     explosive_resist: float
+
+    # Resources
+    power_draw: int
+    weight: int
+    slots: int
+
+    # Metadata (with defaults)
+    tags: Tuple[str, ...] = ()
 
     def get_effective_armor(self, damage_type: DamageType) -> float:
         """Calculate effective armor vs damage type."""
@@ -105,8 +129,12 @@ class ArmorComponent(Component):
 
 
 @dataclass(frozen=True)
-class ShieldComponent(Component):
+class ShieldComponent:
     """Immutable runtime shield component."""
+
+    # Identity
+    id: str
+    name: str
 
     # Stats
     max_strength: int
@@ -117,6 +145,14 @@ class ShieldComponent(Component):
     # Absorption
     energy_absorption: float
     kinetic_absorption: float
+
+    # Resources
+    power_draw: int
+    weight: int
+    slots: int
+
+    # Metadata (with defaults)
+    tags: Tuple[str, ...] = ()
 
     def get_damage_absorbed(self, incoming_damage: float, damage_type: DamageType) -> float:
         """Calculate how much damage shield absorbs."""
@@ -135,14 +171,26 @@ class ShieldComponent(Component):
 
 
 @dataclass(frozen=True)
-class EngineComponent(Component):
+class EngineComponent:
     """Immutable runtime engine component."""
+
+    # Identity
+    id: str
+    name: str
 
     # Stats
     thrust: float
     max_speed: float
     acceleration: float
     turn_rate: float
+
+    # Resources
+    power_draw: int
+    weight: int
+    slots: int
+
+    # Metadata (with defaults)
+    tags: Tuple[str, ...] = ()
 
 
 # ============================================================================
@@ -151,12 +199,24 @@ class EngineComponent(Component):
 
 
 @dataclass(frozen=True)
-class PowerGeneratorComponent(Component):
+class PowerGeneratorComponent:
     """Immutable runtime power generator."""
+
+    # Identity
+    id: str
+    name: str
 
     # Stats
     max_output: int
     base_efficiency: float
+
+    # Resources
+    power_draw: int
+    weight: int
+    slots: int
+
+    # Metadata (with defaults)
+    tags: Tuple[str, ...] = ()
 
     def get_output(self, current_efficiency: float = 1.0) -> int:
         """Calculate current power output."""

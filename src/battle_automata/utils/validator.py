@@ -288,11 +288,14 @@ class UnitValidator:
         for c in components:
             if c is None:
                 continue
+            # Check both config and runtime types
             if isinstance(c, PowerGeneratorComponentConfig):
                 generation += c.stats.max_output
+            elif hasattr(c, 'category') and c.category == 'power' and hasattr(c, 'max_output'):
+                generation += c.max_output
 
         # Calculate consumption
-        consumption = sum(c.power_draw for c in components if c is not None)
+        consumption = sum(getattr(c, 'power_draw', 0) for c in components if c is not None)
 
         # Check balance
         if consumption > generation:
@@ -318,15 +321,21 @@ class UnitValidator:
         errors = []
         warnings = []
 
-        # Count component types
+        # Count component types - check both config and runtime types
         has_weapon = any(
-            isinstance(c, WeaponComponentConfig) for c in components if c is not None
+            isinstance(c, WeaponComponentConfig) or
+            (hasattr(c, 'category') and c.category == 'weapon')
+            for c in components if c is not None
         )
         has_power = any(
-            isinstance(c, PowerGeneratorComponentConfig) for c in components if c is not None
+            isinstance(c, PowerGeneratorComponentConfig) or
+            (hasattr(c, 'category') and c.category == 'power')
+            for c in components if c is not None
         )
         has_engine = any(
-            isinstance(c, EngineComponentConfig) for c in components if c is not None
+            isinstance(c, EngineComponentConfig) or
+            (hasattr(c, 'category') and c.category == 'engine')
+            for c in components if c is not None
         )
 
         # Requirements

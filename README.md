@@ -128,9 +128,56 @@ Build combat units from modular components, then watch them battle autonomously 
 - **Day 1:** Core architecture and data structures
 - **Day 2:** Combat simulation, polish, testing, docs
 
-## Getting Started
+## Installation
 
 ### Prerequisites
+
+- Python 3.10 or higher
+- pip package manager
+- Git for version control
+
+### Install from Source
+
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/better-space-arena.git
+cd better-space-arena
+
+# Install the package
+pip install -e .
+
+# Verify installation
+python -m battle_automata.cli.main --version
+```
+
+### Quick Start
+
+```bash
+# List available themes
+python -m battle_automata.cli.main theme list
+
+# View theme details
+python -m battle_automata.cli.main theme info space-ships
+
+# List components in a theme
+python -m battle_automata.cli.main component list --theme space-ships
+
+# Show component details
+python -m battle_automata.cli.main component show laser_cannon_mk1 --theme space-ships
+
+# List units
+python -m battle_automata.cli.main unit list --theme space-ships
+
+# View unit details
+python -m battle_automata.cli.main unit show data/themes/space-ships/units/fighter_mk1.yaml
+
+# Simulate a battle (placeholder - full simulation pending)
+python -m battle_automata.cli.main battle simulate fighter_mk1 tank_mk1 --theme space-ships --seed 42
+```
+
+## Development Setup
+
+### For Contributors
 
 - Claude Code with slash command support
 - Git for version control
@@ -244,19 +291,45 @@ The core concept: design → build → simulate → iterate.
 
 To be determined (will be set by project owner)
 
-## Status
+## Implementation Status
 
-✅ **Enhanced multi-agent system V2 complete!**
-- ✅ 4 workflow patterns implemented
-- ✅ Parallel execution with Task tool
-- ✅ Specialized coordinators ready
-- ✅ Comprehensive documentation
-- ⏳ Architecture design pending
-- ⏳ Implementation pending
-- ⏳ Testing pending
-- ⏳ Engine documentation pending
+### ✅ Completed Components
 
-**Ready to start development!** Run `/orchestrator-v2 prompt.md` to begin.
+**Infrastructure (Developer Agent)**
+- ✅ Project structure with src/battle_automata
+- ✅ Package configuration (pyproject.toml)
+- ✅ Theme loading system
+- ✅ Engine facade API
+- ✅ CLI framework with Click & Rich
+- ✅ Integration and E2E tests
+- ✅ Example space-ships theme with 8 components and 3 units
+
+**CLI Commands Available:**
+- ✅ `theme list` - List available themes
+- ✅ `theme info <theme>` - Show theme details
+- ✅ `component list --theme <theme>` - List components
+- ✅ `component show <id> --theme <theme>` - Show component details
+- ✅ `unit list --theme <theme>` - List units
+- ✅ `unit show <file>` - Show unit details
+- ✅ `battle simulate <unit1> <unit2>` - Simulate battle (placeholder)
+
+### ⏳ In Progress (Other Agents)
+
+- ⏳ Component system implementation (models, validation)
+- ⏳ Battle simulation engine
+- ⏳ Unit builder system
+- ⏳ Full battle mechanics
+- ⏳ Advanced CLI features
+
+### 🎯 Ready to Use
+
+You can already:
+1. Install the package: `pip install -e .`
+2. Browse themes and components via CLI
+3. View unit configurations
+4. Test the data loading system
+
+**Next:** Run other agents to implement battle simulation and component validation.
 
 ## What Makes This Special
 

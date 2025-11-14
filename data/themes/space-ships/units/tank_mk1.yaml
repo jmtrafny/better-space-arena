@@ -1,0 +1,79 @@
+# Tank Mk1 - Heavy armored unit
+
+# Identity
+id: tank_mk1
+name: "Tank Mk1"
+theme: space-ships
+class_name: tank
+
+description: >
+  Heavily armored unit designed to absorb damage.
+  Trades speed for survivability. Excellent defensive unit.
+
+# Grid layout
+layout:
+  width: 12
+  height: 12
+
+# Component placements
+components:
+  # Weapons (front)
+  - component_id: laser_cannon_mk1
+    position:
+      x: 6
+      y: 2
+    facing: 0
+
+  # Heavy defense (multiple armor plates)
+  - component_id: light_armor_mk1
+    position:
+      x: 6
+      y: 4
+    facing: 0
+
+  - component_id: light_armor_mk1
+    position:
+      x: 6
+      y: 6
+    facing: 0
+
+  - component_id: light_armor_mk1
+    position:
+      x: 6
+      y: 8
+    facing: 0
+
+  # Power (center)
+  - component_id: fusion_reactor_small
+    position:
+      x: 6
+      y: 6
+    facing: 0
+
+  # Propulsion (rear)
+  - component_id: ion_engine_mk1
+    position:
+      x: 6
+      y: 10
+    facing: 180
+
+# Resource budgets
+resources:
+  max_power: 200
+  max_weight: 800
+  max_slots: 25
+
+# AI behavior
+ai:
+  movement_style: defensive
+  engagement_range: 100.0
+  retreat_threshold: 0.2
+
+# Metadata
+tags:
+  - tank
+  - heavy_armor
+  - defensive
+
+cost: 800
+build_time: 90

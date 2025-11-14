@@ -6,7 +6,6 @@ name: "Laser Cannon Mk1"
 type: offensive
 category: weapon
 
-# Description
 description: >
   Basic energy weapon with good accuracy and fire rate.
   Effective against shields, less effective against armor.
@@ -17,31 +16,31 @@ damage_type: energy
 
 stats:
   damage: 50
-  range: 100.0        # meters
-  fire_rate: 1.0      # shots/second
-  accuracy: 0.85      # 85% base hit chance
-  projectile_speed: 200.0  # m/s
+  range: 100.0
+  fire_rate: 1.0
+  accuracy: 0.85
+  projectile_speed: 200.0
 
 special:
-  armor_piercing: 0.3       # Ignore 30% of armor
-  shield_penetration: 0.0   # No shield bypass
-  critical_chance: 0.1      # 10% crit chance
-  critical_multiplier: 2.0  # 2x damage on crit
+  armor_piercing: 0.3
+  shield_penetration: 0.0
+  critical_chance: 0.1
+  critical_multiplier: 2.0
 
 targeting:
-  firing_arc: 90            # degrees
+  firing_arc: 90
   priority: closest
   ignore_allies: true
 
-# Resource costs
 resources:
-  power_draw: 20    # watts
-  weight: 50        # kg
-  slots: 1          # grid slots
-  cost: 100         # credits
+  power_draw: 50
+  weight: 50
+  slots: 1
+  cost: 100
 
-# Metadata
 tags:
   - energy_weapon
   - point_defense
   - anti_fighter
+
+on_hit_effects: []

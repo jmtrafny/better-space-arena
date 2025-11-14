@@ -1,25 +1,21 @@
-# Ion Engine Mk1 - Standard propulsion
-
+# Ion Engine Mk1
 id: ion_engine_mk1
 name: "Ion Engine Mk1"
 type: mobility
 category: engine
-
-description: >
-  Efficient ion drive providing good acceleration.
-  Balanced thrust-to-power ratio.
+description: "Efficient ion drive with balanced thrust-to-power ratio."
 
 stats:
-  thrust: 300.0          # Newtons
-  max_speed: 20.0        # m/s
-  acceleration: 5.0      # m/s²
-  turn_rate: 90.0        # degrees/s
+  thrust: 300.0
+  max_speed: 20.0
+  acceleration: 5.0
+  turn_rate: 90.0
 
 resources:
-  power_draw: 60         # watts
-  weight: 100            # kg
+  power_draw: 45
+  weight: 100
   slots: 2
-  cost: 120
+  cost: 150
 
 tags:
   - ion_drive

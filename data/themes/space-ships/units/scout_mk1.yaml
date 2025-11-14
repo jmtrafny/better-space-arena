@@ -1,0 +1,68 @@
+# Scout Mk1 - Fast reconnaissance unit
+
+# Identity
+id: scout_mk1
+name: "Scout Mk1"
+theme: space-ships
+class_name: scout
+
+description: >
+  Ultra-fast scout designed for reconnaissance and mobility.
+  Minimal weapons and armor, maximum speed.
+
+# Grid layout
+layout:
+  width: 8
+  height: 8
+
+# Component placements
+components:
+  # Minimal weapons
+  - component_id: laser_cannon_mk1
+    position:
+      x: 4
+      y: 2
+    facing: 0
+
+  # Minimal armor
+  - component_id: light_armor_mk1
+    position:
+      x: 4
+      y: 4
+    facing: 0
+
+  # Power
+  - component_id: fusion_reactor_small
+    position:
+      x: 4
+      y: 4
+    facing: 0
+
+  # Propulsion (rear)
+  - component_id: ion_engine_mk1
+    position:
+      x: 4
+      y: 6
+    facing: 180
+
+# Resource budgets
+resources:
+  max_power: 180
+  max_weight: 400
+  max_slots: 15
+
+# AI behavior
+ai:
+  movement_style: kiting
+  engagement_range: 90.0
+  retreat_threshold: 0.5
+
+# Metadata
+tags:
+  - scout
+  - fast
+  - light
+  - mobility
+
+cost: 520
+build_time: 45
