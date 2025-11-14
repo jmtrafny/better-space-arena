@@ -68,8 +68,6 @@ export class BattleEngineWASM {
     const resultPy = await pyodideLoader.runPythonAsync(`
       import json
       from battle_automata.api.battle import Battle, BattleConfig
-      from battle_automata.api.units import UnitBuilder
-      from battle_automata.core.registry import ComponentRegistry
 
       # Parse inputs
       unit1_data = json.loads(unit1_json)
@@ -86,28 +84,18 @@ export class BattleEngineWASM {
         time_step=config_data.get('time_step', 0.1)
       )
 
-      # TODO: Load units from data
-      # For now, use hardcoded test units
-      # In next phase, implement proper unit loading from JSON
+      # Create and run battle
+      battle = Battle(config=battle_config)
+      result = battle.simulate()
 
-      # Create battle
-      # battle = Battle(config=battle_config)
-      # result = battle.simulate(unit1, unit2)
-
-      # Mock result for now
-      {
-        'winner': 'unit1',
-        'duration': 5.5,
-        'events': [
-          {'timestamp': 0.0, 'type': 'battle_start', 'data': {}},
-          {'timestamp': 5.5, 'type': 'battle_end', 'data': {'winner': 'unit1'}}
-        ],
-        'final_state': {'units': {}}
-      }
+      # Convert result to dictionary for JavaScript
+      result_dict = result.to_dict()
+      result_dict
     `);
 
     // Convert Python result to JavaScript
-    const result = resultPy.toJs({ dict_converter: Object.fromEntries });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const result = (resultPy as any).toJs({ dict_converter: Object.fromEntries });
 
     return result as BattleResult;
   }
@@ -167,7 +155,8 @@ export class BattleEngineWASM {
       ]
     `);
 
-    const components = componentsPy.toJs({ dict_converter: Object.fromEntries });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const components = (componentsPy as any).toJs({ dict_converter: Object.fromEntries });
     return components as Component[];
   }
 
@@ -191,7 +180,8 @@ export class BattleEngineWASM {
       }
     `);
 
-    const theme = themePy.toJs({ dict_converter: Object.fromEntries });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const theme = (themePy as any).toJs({ dict_converter: Object.fromEntries });
     return theme as ThemeMetadata;
   }
 

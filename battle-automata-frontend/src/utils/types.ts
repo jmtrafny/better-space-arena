@@ -10,17 +10,36 @@
 
 export interface BattleEvent {
   timestamp: number;
-  type: string;
-  unit_id?: string;
+  turn?: number;
+  event_type?: string;
   data: Record<string, unknown>;
+  // Legacy support for old format
+  type?: string;
+  unit_id?: string;
+}
+
+export interface BattleStatistics {
+  winner: string | null;
+  outcome_reason: string;
+  total_turns: number;
+  total_time: number;
+  accuracy: number;
+  total_shots_fired: number;
+  total_hits: number;
+  total_misses: number;
+  total_critical_hits: number;
 }
 
 export interface BattleResult {
-  winner: string | null;
-  duration: number;
+  config: Record<string, unknown>;
+  statistics: BattleStatistics;
   events: BattleEvent[];
   final_state: {
-    units: Record<string, unknown>;
+    turn: number;
+    time_elapsed: number;
+    units: unknown[];
+    winner: string | null;
+    outcome: string | null;
   };
 }
 
